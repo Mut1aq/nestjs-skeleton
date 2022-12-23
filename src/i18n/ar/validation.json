@@ -1,0 +1,18 @@
+{
+  "isNotEmpty": "{property} يجب التزويد ب",
+  "min": "{property} يجب ان تكون اكبر من {min}",
+  "isString": "{property} يجب ان يكون متكون من احرف حقيقية",
+  "isInt": "{property} يجب ان يكون عدد صحيح",
+  "max": "{property} يجب ان يكون اقل من {max}",
+  "email": "يجب التزويد بايميل صحيح",
+  "minLength": "{property} يجب ان يكون اكثر من {characters} حرف",
+  "maxLength": "{property} يجب ان يكون اقل من {characters} حرف",
+  "uniqueEmail": "الايميل مستخدم من قبل, يرجى اختيار ايميل ثاني",
+  "passwordContains": {
+    "uppercase": "يجب ان تحتوي كلمة السر على حرف كبير",
+    "lowercase": "يجب ان تحتوي كلمة السر على حرف صغير",
+    "number": "يجب ان تحتوي كلمة السر على رقم",
+    "specialCharacter": "يجب ان تحتوي كلمة السر على رمز"
+  },
+  "date": "يجب ادخال شكل التاريخ بالشكل ي ي/ م م / س س س س "
+}

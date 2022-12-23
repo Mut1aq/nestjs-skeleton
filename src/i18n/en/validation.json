@@ -1,0 +1,18 @@
+{
+  "isNotEmpty": "{property} must be provided",
+  "min": "{property} must be more than {min}",
+  "isString": "{property} must be a string",
+  "isInt": "{property} must be an integer number",
+  "max": "{property} must be less than {max}",
+  "email": "You must enter a valid email",
+  "minLength": "{property} must be more than {characters} characters",
+  "maxLength": "{property} must be less than {characters} characters",
+  "uniqueEmail": "This email already exists, please choose another one",
+  "passwordContains": {
+    "uppercase": "Password must contain an uppercase letter",
+    "lowercase": "Password must contain a lowercase letter",
+    "number": "Password must contain a number",
+    "specialCharacter": "Password must contain an special character letter"
+  },
+  "date": "Date Format Must be dd/mm/yy"
+}
