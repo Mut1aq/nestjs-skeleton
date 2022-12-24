@@ -1,11 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
 import {
-  IsEmail,
   IsNotEmpty,
+  IsEmail,
+  MinLength,
   IsString,
   MaxLength,
-  MinLength,
 } from 'class-validator';
 import { i18nValidationMessage } from 'nestjs-i18n';
 import { PasswordContainsLowercaseLetter } from 'src/shared/decorators/validation/password/lowercase-letters.decorator';
@@ -13,7 +13,7 @@ import { PasswordContainsNumbers } from 'src/shared/decorators/validation/passwo
 import { PasswordContainsSpecialCharacter } from 'src/shared/decorators/validation/password/special-characters.decorator';
 import { PasswordContainsUppercaseLetter } from 'src/shared/decorators/validation/password/uppercase-letters.decorator';
 
-export class CreateUserDto {
+export class LoginDto {
   @ApiProperty({
     description: "User's Email when registering",
     example: 'mutlaqalsadeed@gmail.com',
@@ -40,7 +40,6 @@ export class CreateUserDto {
   email: string;
 
   //*******************************************/
-
   @ApiProperty({
     description: 'User password when registering',
     example: 'GreaTPassWord123',
@@ -78,32 +77,4 @@ export class CreateUserDto {
   @PasswordContainsLowercaseLetter()
   @PasswordContainsUppercaseLetter()
   password: string;
-
-  //*******************************************/
-
-  @ApiProperty({
-    description: 'Users Full name',
-    example: 'Mutlaq Alsadeed',
-    name: 'fullName',
-    required: true,
-    type: 'string',
-    minLength: 2,
-  })
-  @IsNotEmpty({
-    message: i18nValidationMessage('auth.validation.isNotEmpty', {
-      property: 'Full Name',
-    }),
-  })
-  @IsString({
-    message: i18nValidationMessage('auth.validation.isString', {
-      property: 'Full Name',
-    }),
-  })
-  @MinLength(2, {
-    message: i18nValidationMessage('auth.validation.minLength', {
-      property: 'Full Name',
-      characters: 2,
-    }),
-  })
-  fullName: string;
 }
