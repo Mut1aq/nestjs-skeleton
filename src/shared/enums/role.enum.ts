@@ -1,4 +1,4 @@
-export enum Role {}
-/**
- * inset roles
- */
+export enum Role {
+  User = 'user',
+  Admin = 'admin',
+}

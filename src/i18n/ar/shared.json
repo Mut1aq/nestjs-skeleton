@@ -1,0 +1,25 @@
+{
+  "errors": {
+    "error": "حدث خطاء",
+    "user": "لم يتم العثور على المستخدم"
+  },
+  "success": {
+    "success": "تمت العملية بنجاح"
+  },
+  "dtos": {
+    "property": {
+      "fullName": "الاسم الكامل",
+      "email": "الايميل",
+      "password": "كلمة السر"
+    },
+    "constraint": {
+      "uppercase": "حرف كبير",
+      "lowercase": "حرف صغير",
+      "number": "رقم",
+      "specialCharacter": "رمز"
+    }
+  },
+  "entities": {
+    "user": "المستخدم"
+  }
+}
