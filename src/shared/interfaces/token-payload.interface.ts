@@ -1,5 +1,6 @@
+/**
+ * sub: user's id, sub is the standard JWT naming convention
+ */
 export interface Payload {
-  fullName: string;
-  email: string;
   sub: string;
 }

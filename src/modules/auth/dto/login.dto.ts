@@ -23,16 +23,16 @@ export class LoginDto {
     type: 'string',
   })
   @IsNotEmpty({
-    message: i18nValidationMessage('auth.validation.isNotEmpty', {
+    message: i18nValidationMessage('validation.isNotEmpty', {
       property: 'Email',
     }),
   })
   @Transform((param) => param.value.toLowerCase().trim())
   @IsEmail(undefined, {
-    message: i18nValidationMessage('auth.validation.email'),
+    message: i18nValidationMessage('validation.email'),
   })
   @MinLength(5, {
-    message: i18nValidationMessage('auth.validation.minLength', {
+    message: i18nValidationMessage('validation.minLength', {
       property: 'Email',
       characters: 5,
     }),
@@ -51,23 +51,23 @@ export class LoginDto {
     type: 'string',
   })
   @IsNotEmpty({
-    message: i18nValidationMessage('auth.validation.isNotEmpty', {
+    message: i18nValidationMessage('validation.isNotEmpty', {
       property: 'Password',
     }),
   })
   @IsString({
-    message: i18nValidationMessage('auth.validation.isString', {
+    message: i18nValidationMessage('validation.isString', {
       property: 'Password',
     }),
   })
   @MinLength(8, {
-    message: i18nValidationMessage('auth.validation.minLength', {
+    message: i18nValidationMessage('validation.minLength', {
       property: 'Password',
       characters: 8,
     }),
   })
   @MaxLength(20, {
-    message: i18nValidationMessage('auth.validation.maxLength', {
+    message: i18nValidationMessage('validation.maxLength', {
       property: 'Password',
       characters: 20,
     }),

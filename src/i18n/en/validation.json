@@ -14,5 +14,13 @@
     "number": "Password must contain a number",
     "specialCharacter": "Password must contain an special character letter"
   },
-  "date": "Date Format Must be dd/mm/yy"
+  "confirmPasswordContains": {
+    "uppercase": "Confirm Password must contain an uppercase letter",
+    "lowercase": "Confirm Password must contain a lowercase letter",
+    "number": "Confirm Password must contain a number",
+    "specialCharacter": "Confirm Password must contain an special character letter"
+  },
+  "date": "Date Format Must be dd/mm/yy",
+  "confirmPasswordMatch": "Confirmed password must match password",
+  "invalidMongoDBID": "The ID is invalid"
 }

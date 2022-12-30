@@ -1,19 +1,16 @@
 import { DocumentBuilder } from '@nestjs/swagger';
-import { AppService } from 'src/app.service';
 import {
   GlobalCustomExceptionInterceptor,
   GlobalCustomExceptionFilter,
   GlobalThrottlerGuard,
   GlobalJwtAuthGuard,
-} from './app-constants';
+} from '../constants/app-constants';
 
 export const GlobalInterceptors = [GlobalCustomExceptionInterceptor];
 
 export const GlobalFilters = [GlobalCustomExceptionFilter];
 
 export const GlobalGuards = [GlobalThrottlerGuard, GlobalJwtAuthGuard];
-
-export const GlobalServices = [AppService];
 
 export const SwaggerConfig = new DocumentBuilder()
   .setTitle('Nestjs Skeleton')

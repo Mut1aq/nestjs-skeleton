@@ -29,15 +29,9 @@ export class AuthService {
 
   async login(req: any): Promise<{ token: string }> {
     const userID = req?.user?._doc?._id;
-    const user = await this.userModel
-      .findById(userID)
-      .populate('addedMovies')
-      .populate('watchedMovies')
-      .populate('ratedMovies');
+    const user = await this.userModel.findById(userID);
 
     const payload: Payload = {
-      fullName: user.fullName,
-      email: user.email,
       sub: user._id,
     };
 

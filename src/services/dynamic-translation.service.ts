@@ -14,7 +14,7 @@ export class DynamicTranslationService {
     );
     property = await this.i18n.translate('shared.dtos.property.' + property);
 
-    const message = await this.i18n.translate('auth.validation.contains', {
+    const message = await this.i18n.translate('validation.contains', {
       args: {
         property,
         constraint,

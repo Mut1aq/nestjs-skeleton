@@ -6,8 +6,7 @@ import {
   ValidationOptions,
   registerDecorator,
 } from 'class-validator';
-import { DynamicTranslationService } from 'src/services/dynamic-translation.service';
-import { numbers } from 'src/shared/constants/constants';
+import { numbers } from 'src/shared/constants/general-constants';
 
 @ValidatorConstraint({ name: 'PasswordContainsNumbers' })
 @Injectable()
@@ -15,9 +14,7 @@ export class PasswordContainsNumbersConstraint
   implements ValidatorConstraintInterface
 {
   message: string;
-  constructor(
-    private readonly dynamicTranslationService: DynamicTranslationService,
-  ) {}
+
   async validate(
     value: string = '',
     validationArguments?: ValidationArguments,
@@ -30,17 +27,10 @@ export class PasswordContainsNumbersConstraint
   }
 
   defaultMessage(validationArguments?: ValidationArguments): any {
-    // const message = this.dynamicTranslationService.passwordTranslation(
-    //   'number',
-    //   'password',
-    // );
-
-    // message.then((value) => {
-    //   this.message = value;
-    // });
-
-    // return this.message;
-    return 'auth.validation.passwordContains.number';
+    if (validationArguments.property === 'confirmPassword') {
+      return 'validation.confirmPasswordContains.uppercase';
+    }
+    return 'validation.passwordContains.uppercase';
   }
 }
 /**
