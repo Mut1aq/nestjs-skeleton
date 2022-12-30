@@ -6,9 +6,7 @@ import {
   ValidationOptions,
   registerDecorator,
 } from 'class-validator';
-import { I18nService } from 'nestjs-i18n';
-import { lowercaseLetters } from 'src/shared/constants/constants';
-import { DynamicTranslationService } from 'src/services/dynamic-translation.service';
+import { lowercaseLetters } from 'src/shared/constants/general-constants';
 
 @ValidatorConstraint({ name: 'PasswordContainsLowercaseLetter' })
 @Injectable()
@@ -16,9 +14,6 @@ export class PasswordContainsLowercaseLetterConstraint
   implements ValidatorConstraintInterface
 {
   message: string = '';
-  constructor(
-    private readonly dynamicTranslationService: DynamicTranslationService,
-  ) {}
 
   async validate(
     value: string = '',
@@ -31,17 +26,10 @@ export class PasswordContainsLowercaseLetterConstraint
     return false;
   }
   defaultMessage(validationArguments?: ValidationArguments): any {
-    // const message = this.dynamicTranslationService.passwordTranslation(
-    //   'number',
-    //   'password',
-    // );
-
-    // message.then((value) => {
-    //   this.message = value;
-    // });
-
-    // return this.message;
-    return 'auth.validation.passwordContains.lowercase';
+    if (validationArguments.property === 'confirmPassword') {
+      return 'validation.confirmPasswordContains.uppercase';
+    }
+    return 'validation.passwordContains.uppercase';
   }
 }
 /**

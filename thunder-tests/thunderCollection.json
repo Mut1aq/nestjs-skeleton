@@ -1,0 +1,24 @@
+[
+  {
+    "_id": "2533cb1e-0ef9-4b34-b7ba-dc6fe71b25b5",
+    "colName": "skeleton",
+    "created": "2022-12-30T21:13:53.053Z",
+    "sortNum": 10000,
+    "folders": [
+      {
+        "_id": "d4de7cec-8f8e-42cb-b89a-a3b36e2d90a8",
+        "name": "auth",
+        "containerId": "",
+        "created": "2022-12-30T21:13:59.847Z",
+        "sortNum": 10000
+      }
+    ],
+    "settings": {
+      "headers": [],
+      "tests": [],
+      "options": {
+        "baseUrl": "localhost:3000/api/"
+      }
+    }
+  }
+]

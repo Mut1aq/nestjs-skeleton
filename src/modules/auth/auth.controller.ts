@@ -2,6 +2,7 @@ import { Controller, Post, Body, Request, UseGuards } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
   ApiCreatedResponse,
+  ApiOkResponse,
   ApiTags,
 } from '@nestjs/swagger';
 import { LocalAuthGuard } from 'src/guards/local-auth.guard';
@@ -26,6 +27,10 @@ export class AuthController {
     return this.authService.register(userCreateDto);
   }
 
+  @ApiOkResponse({
+    status: 200,
+    description: 'Logged in successfully, token is in the response json',
+  })
   @Public()
   @UseGuards(LocalAuthGuard)
   @Post('login')

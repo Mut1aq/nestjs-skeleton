@@ -54,7 +54,15 @@ export type I18nTranslations = {
             "number": string;
             "specialCharacter": string;
         };
+        "confirmPasswordContains": {
+            "uppercase": string;
+            "lowercase": string;
+            "number": string;
+            "specialCharacter": string;
+        };
         "date": string;
+        "confirmPasswordMatch": string;
+        "invalidMongoDBID": string;
     };
 };
 export type I18nPath = Path<I18nTranslations>;

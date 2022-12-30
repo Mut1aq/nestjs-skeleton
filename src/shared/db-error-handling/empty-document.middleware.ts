@@ -1,6 +1,5 @@
 import { HttpException, HttpStatus } from '@nestjs/common';
-import { Document } from 'mongoose';
-/**
+ /**
  * #### throw error if the document is empty
  *
  * @param document MongoDb Document
