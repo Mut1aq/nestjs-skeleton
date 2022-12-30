@@ -4,8 +4,8 @@
   "engines": {
     "node": "18.12.1"
   },
-  "description": "",
-  "author": "",
+  "description": "Nestjs Skeleton (starter code) with prebuilt features",
+  "author": "Mutlaq Alsadeed",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
