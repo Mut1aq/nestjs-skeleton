@@ -13,3 +13,6 @@
 - Swagger Setup
 - Helmet usage
 - Custom MongoDB ID Pipe to check for validity
+- Server Health check
+- Simple Chatting Gateway
+- Strict TS
