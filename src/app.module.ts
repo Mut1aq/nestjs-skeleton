@@ -17,7 +17,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
-    MongooseModule.forRoot(process.env.MONGODB_URL),
+    MongooseModule.forRoot(process.env.MONGODB_URL as string),
     ThrottlerModule.forRoot(ThrottlerOptions),
     I18nModule.forRoot(I18nOptions),
     ServicesModule,

@@ -12,6 +12,9 @@ import { AppModule } from './app.module';
 import { ServerLogger } from './services/logger/server-logger';
 import { SwaggerOptions } from './shared/configs/app-options';
 import { SwaggerConfig } from './shared/configs/app.configs';
+import * as compression from 'compression';
+
+declare const module: any;
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
@@ -22,6 +25,8 @@ async function bootstrap() {
   const configService = app.get<ConfigService>(ConfigService);
 
   app.enableCors();
+
+  app.use(compression());
 
   app.setGlobalPrefix('api');
 
@@ -50,6 +55,11 @@ async function bootstrap() {
   SwaggerModule.setup('api', app, document);
 
   await app.listen(configService.get('PORT') || 3000);
+
+  if (module.hot) {
+    module.hot.accept();
+    module.hot.dispose(() => app.close());
+  }
 }
 bootstrap();
 

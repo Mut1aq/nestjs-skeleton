@@ -1,5 +1,5 @@
 import { LoggerService } from '@nestjs/common';
-import { createWriteStream, existsSync, mkdirSync } from 'fs';
+import { createWriteStream, existsSync, mkdirSync, WriteStream } from 'fs';
 import { format } from 'util';
 import { ColorScheme } from 'src/shared/interfaces/color-scheme.interface';
 import {
@@ -9,10 +9,10 @@ import {
   LogColorScheme,
   VerboseColorScheme,
   WarnColorScheme,
-} from './pallet';
+} from '../../shared/constants/pallet';
 
 export class ServerLogger implements LoggerService {
-  logFile = null;
+  logFile: WriteStream | null = null;
   filePath = './logs/skeleton.log';
   constructor() {
     if (!existsSync('./logs')) {
@@ -42,7 +42,12 @@ export class ServerLogger implements LoggerService {
     this.basicLog(message, context, 'WARN', WarnColorScheme);
   }
 
-  basicLog(message, context, type, colorScheme = null) {
+  basicLog(
+    message: any,
+    context: string,
+    type: string | number,
+    colorScheme: ColorScheme,
+  ) {
     const { messageColor, contextColor } = colorScheme;
     const customMessage = `${messageColor}[Skeleton] ${
       process.pid
@@ -51,11 +56,11 @@ export class ServerLogger implements LoggerService {
   }
 
   APIlog(
-    message: any,
+    message: string,
     context: any = 'API',
     reqInfo: any,
     statusCode: number,
-    error = null,
+    error: string | null = null,
   ) {
     const scheme = error ? ErrorColorScheme : APIColorScheme;
     const colorScheme: ColorScheme = {
@@ -66,9 +71,9 @@ export class ServerLogger implements LoggerService {
     this._logA(this._formatMessageForLogFile(reqInfo, statusCode));
   }
 
-  private _logA(message) {
+  private _logA(message: string) {
     // writing to file; A stands for apple
-    this.logFile.write(format('', message) + '\n');
+    this.logFile?.write(format('', message) + '\n');
   }
 
   private _formatMessageForLogFile(req: any, statusCode = 500) {

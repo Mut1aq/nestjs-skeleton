@@ -13,8 +13,6 @@ import { numbers } from 'src/shared/constants/general-constants';
 export class PasswordContainsNumbersConstraint
   implements ValidatorConstraintInterface
 {
-  message: string;
-
   async validate(
     value: string = '',
     validationArguments?: ValidationArguments,
@@ -27,7 +25,7 @@ export class PasswordContainsNumbersConstraint
   }
 
   defaultMessage(validationArguments?: ValidationArguments): any {
-    if (validationArguments.property === 'confirmPassword') {
+    if (validationArguments?.property === 'confirmPassword') {
       return 'validation.confirmPasswordContains.uppercase';
     }
     return 'validation.passwordContains.uppercase';

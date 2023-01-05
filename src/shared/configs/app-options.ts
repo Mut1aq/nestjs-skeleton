@@ -10,10 +10,10 @@ import { join } from 'path';
 export const I18nOptions = {
   fallbackLanguage: 'en',
   loaderOptions: {
-    path: join(__dirname, '../../i18n'),
+    path: join(__dirname, '/i18n/'),
     watch: true,
   },
-  typesOutputPath: join(__dirname, '../../../src/generated/i18n.generated.ts'),
+  typesOutputPath: join(__dirname, '../src/generated/i18n.generated.ts'),
   resolvers: [
     { use: QueryResolver, options: ['lang', 'locale', 'l'] },
     new HeaderResolver(['x-custom-lang']),

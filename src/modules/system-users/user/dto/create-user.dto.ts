@@ -38,7 +38,7 @@ export class CreateUserDto {
       characters: 5,
     }),
   })
-  email: string;
+  email!: string;
 
   //*******************************************/
 
@@ -78,7 +78,7 @@ export class CreateUserDto {
   @PasswordContainsSpecialCharacter()
   @PasswordContainsLowercaseLetter()
   @PasswordContainsUppercaseLetter()
-  password: string;
+  password!: string;
 
   //*******************************************/
 
@@ -120,7 +120,7 @@ export class CreateUserDto {
   @PasswordContainsLowercaseLetter()
   @PasswordContainsUppercaseLetter()
   @Match('password')
-  confirmPassword: string;
+  confirmPassword!: string;
 
   //*******************************************/
 
@@ -148,5 +148,5 @@ export class CreateUserDto {
       characters: 2,
     }),
   })
-  fullName: string;
+  fullName!: string;
 }
