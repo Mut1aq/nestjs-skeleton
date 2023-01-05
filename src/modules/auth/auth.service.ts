@@ -32,7 +32,7 @@ export class AuthService {
     const user = await this.userModel.findById(userID);
 
     const payload: Payload = {
-      sub: user._id,
+      sub: user?._id,
     };
 
     const token = this.jwtService.sign(payload, {

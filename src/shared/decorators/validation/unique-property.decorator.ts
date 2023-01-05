@@ -25,7 +25,7 @@ export class UniquePropertyConstraint implements ValidatorConstraintInterface {
     value: string,
     validationArguments?: ValidationArguments,
   ): Promise<any> {
-    const [property] = validationArguments.constraints;
+    const [property] = validationArguments?.constraints as string[];
 
     const user = await this.userModel.findOne({
       [property]: value,

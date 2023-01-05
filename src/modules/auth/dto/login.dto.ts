@@ -37,7 +37,7 @@ export class LoginDto {
       characters: 5,
     }),
   })
-  email: string;
+  email!: string;
 
   //*******************************************/
   @ApiProperty({
@@ -76,5 +76,5 @@ export class LoginDto {
   @PasswordContainsSpecialCharacter()
   @PasswordContainsLowercaseLetter()
   @PasswordContainsUppercaseLetter()
-  password: string;
+  password!: string;
 }

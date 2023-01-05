@@ -14,7 +14,7 @@ export class FilterQueryDto {
   @Type(() => Number)
   @IsInt()
   @Min(0)
-  skip: number;
+  skip?: number | undefined;
 
   @ApiProperty({
     description: 'This is for pagination',
@@ -27,7 +27,7 @@ export class FilterQueryDto {
   @Type(() => Number)
   @IsInt()
   @Min(0)
-  limit: number;
+  limit?: number | undefined;
 
   @ApiProperty({
     description: 'Order by date, for filtering, can be either "asc", "desc"',
@@ -38,5 +38,5 @@ export class FilterQueryDto {
   @IsOptional()
   @IsString()
   @IsIn(['asc', 'desc'])
-  orderByDate: string;
+  orderByDate?: string | undefined;
 }

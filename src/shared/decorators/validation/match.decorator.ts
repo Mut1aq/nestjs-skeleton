@@ -9,8 +9,10 @@ import {
 @ValidatorConstraint({ name: 'Match' })
 export class MatchConstraint implements ValidatorConstraintInterface {
   validate(value: any, args: ValidationArguments): boolean {
+    const objectProperties = args.object as any;
     const [relatedPropertyName] = args.constraints;
-    const relatedValue = args.object[relatedPropertyName]; // original value (decorator)
+
+    const relatedValue = objectProperties[relatedPropertyName]; // original value (decorator)
     return value === relatedValue;
   }
   defaultMessage(validationArguments?: ValidationArguments): string {

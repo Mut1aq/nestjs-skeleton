@@ -26,7 +26,7 @@ export class PasswordContainsLowercaseLetterConstraint
     return false;
   }
   defaultMessage(validationArguments?: ValidationArguments): any {
-    if (validationArguments.property === 'confirmPassword') {
+    if (validationArguments?.property === 'confirmPassword') {
       return 'validation.confirmPasswordContains.uppercase';
     }
     return 'validation.passwordContains.uppercase';
