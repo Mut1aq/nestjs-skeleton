@@ -26,7 +26,7 @@ export class ChatGateway {
   )}`;
 
   @WebSocketServer()
-  server: Server;
+  server!: Server;
 
   @SubscribeMessage('message')
   handleMessage(

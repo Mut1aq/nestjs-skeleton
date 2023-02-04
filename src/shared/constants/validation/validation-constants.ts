@@ -78,3 +78,17 @@ export const uppercaseLetters = [
   'Z',
   ' ',
 ];
+
+export const imageFormats = [
+  'png',
+  'jpeg',
+  'apng',
+  'avif',
+  'jpg',
+  'jfif',
+  'pjpeg',
+  'pjp',
+  'tiff',
+  'tif',
+  'ico',
+];

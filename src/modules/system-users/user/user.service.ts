@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
-import { emptyDocument } from 'src/shared/db-error-handling/empty-document.middleware';
+import { emptyDocument } from 'src/shared/error-handling/empty-document.helper';
 import { cleanObject } from 'src/shared/util/clean-object.util';
 import { UserDocument, User } from './entities/user.entity';
 

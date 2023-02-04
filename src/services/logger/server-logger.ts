@@ -1,7 +1,7 @@
 import { LoggerService } from '@nestjs/common';
 import { createWriteStream, existsSync, mkdirSync, WriteStream } from 'fs';
 import { format } from 'util';
-import { ColorScheme } from 'src/shared/interfaces/color-scheme.interface';
+import { ColorScheme } from 'src/shared/interfaces/general/color-scheme.interface';
 import {
   APIColorScheme,
   DebugColorScheme,
@@ -9,7 +9,7 @@ import {
   LogColorScheme,
   VerboseColorScheme,
   WarnColorScheme,
-} from '../../shared/constants/pallet';
+} from './pallet';
 
 export class ServerLogger implements LoggerService {
   logFile: WriteStream | null = null;

@@ -28,16 +28,15 @@ export class CustomExceptionFilter implements ExceptionFilter {
       'CustomExceptionFilter',
       request,
       status,
-      exception.message,
+      exception?.message,
     );
 
     response.status(status).json({
       statusCode: status,
       error: translatedErrorMessage,
       message:
-        (exception.getResponse() as { message: string })[
-          'message' ?? 'error'
-        ] ?? translatedErrorMessage,
+        (exception.getResponse() as any)['message' ?? 'error'] ??
+        translatedErrorMessage,
     });
   }
 }

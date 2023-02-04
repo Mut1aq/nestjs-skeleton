@@ -6,7 +6,7 @@ import {
   ValidationOptions,
   registerDecorator,
 } from 'class-validator';
-import { uppercaseLetters } from 'src/shared/constants/general-constants';
+import { uppercaseLetters } from 'src/shared/constants/validation/validation-constants';
 
 @ValidatorConstraint({ name: 'PasswordContainsUppercaseLetter' })
 @Injectable()

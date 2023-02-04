@@ -13,8 +13,7 @@ import { ServerLogger } from './services/logger/server-logger';
 import { SwaggerOptions } from './shared/configs/app-options';
 import { SwaggerConfig } from './shared/configs/app.configs';
 import * as compression from 'compression';
-
-declare const module: any;
+import * as mongoSanitize from 'express-mongo-sanitize';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
@@ -23,12 +22,13 @@ async function bootstrap() {
   });
 
   const configService = app.get<ConfigService>(ConfigService);
+  const logger = app.get<ServerLogger>(ServerLogger);
 
   app.enableCors();
 
-  app.use(compression());
-
   app.setGlobalPrefix('api');
+
+  app.use(compression());
 
   app.useGlobalFilters(
     new I18nValidationExceptionFilter({
@@ -46,6 +46,15 @@ async function bootstrap() {
 
   app.use(helmet());
 
+  app.use(
+    mongoSanitize({
+      dryRun: true,
+      onSanitize: ({ req, key }) => {
+        logger.warn(`[DryRun] This request[${key}] will be sanitized ${req}`);
+      },
+    }),
+  );
+
   const document = SwaggerModule.createDocument(
     app,
     SwaggerConfig,
@@ -54,12 +63,11 @@ async function bootstrap() {
 
   SwaggerModule.setup('api', app, document);
 
-  await app.listen(configService.get('PORT') || 3000);
-
-  if (module.hot) {
-    module.hot.accept();
-    module.hot.dispose(() => app.close());
-  }
+  await app.listen(+configService.get<string>('PORT')! || 3000, () => {
+    logger.log(
+      `Server running on port ${+configService.get<string>('PORT')! || 3000}`,
+    );
+  });
 }
 bootstrap();
 
