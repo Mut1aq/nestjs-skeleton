@@ -22,5 +22,6 @@
   },
   "date": "Date Format Must be dd/mm/yy",
   "confirmPasswordMatch": "Confirmed password must match password",
-  "invalidMongoDBID": "The ID is invalid"
+  "invalidMongoDBID": "The ID is invalid",
+  "throttlerError": "You have made too many requests, please wait at least a minute"
 }

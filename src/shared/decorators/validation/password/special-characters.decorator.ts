@@ -6,7 +6,7 @@ import {
   ValidationOptions,
   registerDecorator,
 } from 'class-validator';
-import { specialCharacters } from 'src/shared/constants/general-constants';
+import { specialCharacters } from 'src/shared/constants/validation/validation-constants';
 
 @ValidatorConstraint({ name: 'PasswordContainsSpecialCharacterConstraint' })
 @Injectable()

@@ -1,17 +1,17 @@
 import { APP_GUARD, APP_INTERCEPTOR, APP_FILTER } from '@nestjs/core';
-import { ThrottlerGuard } from '@nestjs/throttler';
 import { CustomExceptionFilter } from 'src/filters/custom-exception.filter';
-import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
+import { CustomThrottlerGuard } from 'src/guards/custom-throttler.guard';
+import { AccessTokenGuard } from 'src/guards/access-token.guard';
 import { TranslationInterceptor } from 'src/interceptors/translation.interceptor';
- 
-export const GlobalJwtAuthGuard = {
+
+export const GlobalAccessTokenGuard = {
   provide: APP_GUARD,
-  useClass: JwtAuthGuard,
+  useClass: AccessTokenGuard,
 };
 
 export const GlobalCustomExceptionInterceptor = {
   provide: APP_INTERCEPTOR,
-  useClass:  TranslationInterceptor,
+  useClass: TranslationInterceptor,
 };
 
 export const GlobalCustomExceptionFilter = {
@@ -21,5 +21,5 @@ export const GlobalCustomExceptionFilter = {
 
 export const GlobalThrottlerGuard = {
   provide: APP_GUARD,
-  useClass: ThrottlerGuard,
+  useClass: CustomThrottlerGuard,
 };

@@ -6,7 +6,7 @@ import {
   ValidationOptions,
   registerDecorator,
 } from 'class-validator';
-import { lowercaseLetters } from 'src/shared/constants/general-constants';
+import { lowercaseLetters } from 'src/shared/constants/validation/validation-constants';
 
 @ValidatorConstraint({ name: 'PasswordContainsLowercaseLetter' })
 @Injectable()
