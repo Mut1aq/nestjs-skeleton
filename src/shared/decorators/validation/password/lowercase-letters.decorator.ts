@@ -17,7 +17,7 @@ export class PasswordContainsLowercaseLetterConstraint
 
   async validate(
     value: string = '',
-    validationArguments?: ValidationArguments,
+    _?: ValidationArguments,
   ): Promise<boolean> {
     for (const lowercaseLetter of lowercaseLetters) {
       if (value?.includes(lowercaseLetter)) return true;
@@ -27,9 +27,9 @@ export class PasswordContainsLowercaseLetterConstraint
   }
   defaultMessage(validationArguments?: ValidationArguments): any {
     if (validationArguments?.property === 'confirmPassword') {
-      return 'validation.confirmPasswordContains.uppercase';
+      return 'validation.confirmPasswordContains.lowercase';
     }
-    return 'validation.passwordContains.uppercase';
+    return 'validation.passwordContains.lowercase';
   }
 }
 /**

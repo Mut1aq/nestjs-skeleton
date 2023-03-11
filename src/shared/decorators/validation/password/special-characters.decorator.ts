@@ -17,7 +17,7 @@ export class PasswordContainsSpecialCharacterConstraint
 
   async validate(
     value: string = '',
-    validationArguments?: ValidationArguments,
+    _?: ValidationArguments,
   ): Promise<boolean> {
     for (const specialCharacter of specialCharacters) {
       if (value.includes(specialCharacter) && specialCharacter !== '')
@@ -29,9 +29,9 @@ export class PasswordContainsSpecialCharacterConstraint
 
   defaultMessage(validationArguments?: ValidationArguments): any {
     if (validationArguments?.property === 'confirmPassword') {
-      return 'validation.confirmPasswordContains.uppercase';
+      return 'validation.confirmPasswordContains.specialCharacter';
     }
-    return 'validation.passwordContains.uppercase';
+    return 'validation.passwordContains.specialCharacter';
   }
 }
 /**

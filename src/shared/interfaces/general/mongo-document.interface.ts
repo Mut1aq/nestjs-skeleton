@@ -1,5 +1,5 @@
-import { Document } from 'mongoose';
+import { Document, HydratedDocument } from 'mongoose';
 
-export interface MongoDocument extends Document {
+export interface MongoDocument extends HydratedDocument<Document> {
   isDeleted?: boolean | string;
 }

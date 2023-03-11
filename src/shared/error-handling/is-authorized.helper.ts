@@ -1,5 +1,6 @@
 import { UnauthorizedException } from '@nestjs/common';
 import { Types } from 'mongoose';
+import { Action } from '../enums/action.enum';
 
 /**
  * ! Throw an Exception if the user is not allowed to change the resource
@@ -9,8 +10,9 @@ import { Types } from 'mongoose';
 export function isAuthor(
   author: Types.ObjectId,
   currentUserID: Types.ObjectId,
+  action: Action,
 ) {
-  if (author !== currentUserID) {
-    throw new UnauthorizedException('auth.errors.unauthorized');
+  if (author.toString() !== currentUserID.toString()) {
+    throw new UnauthorizedException(`auth.errors.ability.${action}`);
   }
 }

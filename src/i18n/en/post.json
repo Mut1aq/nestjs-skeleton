@@ -1,0 +1,11 @@
+{
+  "errors": {
+    "view": "Something went wrong with viewing a post",
+    "like": "Something went wrong with liking a post",
+    "addTextToMediaPost": "you can't add text to a post that has an image or a video"
+  },
+  "success": {
+    "view": "Post has been viewed successfully",
+    "like": "Post has been liked successfully"
+  }
+}

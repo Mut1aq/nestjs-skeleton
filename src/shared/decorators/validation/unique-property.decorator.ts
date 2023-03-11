@@ -8,16 +8,22 @@ import {
   ValidatorConstraintInterface,
 } from 'class-validator';
 import { Model } from 'mongoose';
-import { UserDocument } from 'src/modules/system-users/user/entities/user.entity';
+import {
+  Admin,
+  AdminDocument,
+} from 'src/modules/system-users/admins/entities/admin.entity';
+import {
+  User,
+  UserDocument,
+} from 'src/modules/system-users/users/entities/user.entity';
 
-/**
- * #### Custom Validator to check if the email exists or not
- */
-@ValidatorConstraint({ name: 'Unique', async: true })
+@ValidatorConstraint({ name: 'UniqueUserProperty', async: true })
 @Injectable()
-export class UniquePropertyConstraint implements ValidatorConstraintInterface {
+export class UniqueUserPropertyConstraint
+  implements ValidatorConstraintInterface
+{
   constructor(
-    @InjectModel('User')
+    @InjectModel(User.name)
     private readonly userModel: Model<UserDocument>,
   ) {}
 
@@ -37,16 +43,56 @@ export class UniquePropertyConstraint implements ValidatorConstraintInterface {
   }
 }
 
-export function Unique(
+export function UniqueUserProperty(
   property: string,
-  validationOptions?: ValidationOptions,
+  validationOptions: ValidationOptions,
 ) {
   return function (object: any, propertyName: string) {
     registerDecorator({
       target: object.constructor,
       propertyName,
       options: validationOptions,
-      validator: UniquePropertyConstraint,
+      validator: UniqueUserPropertyConstraint,
+      constraints: [property],
+    });
+  };
+}
+@ValidatorConstraint({ name: 'UniqueAdminProperty', async: true })
+@Injectable()
+export class UniqueAdminPropertyConstraint
+  implements ValidatorConstraintInterface
+{
+  constructor(
+    @InjectModel(Admin.name)
+    private readonly adminModel: Model<AdminDocument>,
+  ) {}
+
+  async validate(
+    value: string,
+    validationArguments?: ValidationArguments,
+  ): Promise<any> {
+    const [property] = validationArguments?.constraints as string[];
+
+    const Admin = await this.adminModel.findOne({
+      [property]: value,
+    });
+    if (!Admin) {
+      return true;
+    }
+    return false;
+  }
+}
+
+export function UniqueAdminProperty(
+  property: string,
+  validationOptions: ValidationOptions,
+) {
+  return function (object: any, propertyName: string) {
+    registerDecorator({
+      target: object.constructor,
+      propertyName,
+      options: validationOptions,
+      validator: UniqueAdminPropertyConstraint,
       constraints: [property],
     });
   };

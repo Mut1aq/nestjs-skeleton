@@ -1,16 +1,20 @@
 import { HttpException, HttpStatus } from '@nestjs/common';
-import { MongoDocument } from '../interfaces/general/mongo-document.interface';
+import { checkObjectNullability } from '../util/check-nullability.util';
 
 /**
  * ! Throw an Exception if the document is deleted
- * @param document mongoDBDocument (category, city, user)
+ * @param document mongoDBDocument
  * @param name name of the collection for better error handling
  */
-export function isDeleted(
-  document: Partial<MongoDocument | undefined>,
+export function isDeleted<T>(
+  document: (T & { isDeleted: boolean | string }) | null,
   name: string,
 ) {
-  if (document?.isDeleted || document?.isDeleted === 'true') {
-    throw new HttpException('shared.errors.deleted.' + name, HttpStatus.GONE);
+  if (
+    document?.isDeleted ||
+    document?.isDeleted === 'true' ||
+    !checkObjectNullability(document)
+  ) {
+    throw new HttpException('shared.errors.' + name, HttpStatus.GONE);
   }
 }

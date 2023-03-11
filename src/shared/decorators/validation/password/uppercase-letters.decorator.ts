@@ -17,7 +17,7 @@ export class PasswordContainsUppercaseLetterConstraint
 
   async validate(
     value: string = '',
-    validationArguments?: ValidationArguments,
+    _?: ValidationArguments,
   ): Promise<boolean> {
     for (const uppercaseLetter of uppercaseLetters) {
       if (value.includes(uppercaseLetter)) return true;

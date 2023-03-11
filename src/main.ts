@@ -9,26 +9,43 @@ import {
   i18nValidationErrorFactory,
 } from 'nestjs-i18n';
 import { AppModule } from './app.module';
-import { ServerLogger } from './services/logger/server-logger';
+import { ServerAPILogger } from './services/logger/server-api.logger';
 import { SwaggerOptions } from './shared/configs/app-options';
-import { SwaggerConfig } from './shared/configs/app.configs';
+import { SwaggerConfig } from './shared/configs/app-configs';
 import * as compression from 'compression';
 import * as mongoSanitize from 'express-mongo-sanitize';
+import * as bodyParser from 'body-parser';
+import { NestExpressApplication } from '@nestjs/platform-express';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, {
+  const app = await NestFactory.create<NestExpressApplication>(AppModule, {
     bufferLogs: false,
-    logger: new ServerLogger(),
+    logger: new ServerAPILogger(),
+    snapshot: true,
   });
 
   const configService = app.get<ConfigService>(ConfigService);
-  const logger = app.get<ServerLogger>(ServerLogger);
+  const logger = app.get<ServerAPILogger>(ServerAPILogger);
+  const globalPrefix = configService.get<string>('PREFIX')!;
 
-  app.enableCors();
-
-  app.setGlobalPrefix('api');
+  // ======================================================
+  // security
+  // ======================================================
 
   app.use(compression());
+  app.enable('trust proxy');
+  app.set('etag', 'strong');
+  app.use(bodyParser.json({ limit: '10mb' }));
+  app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
+  app.use(helmet());
+  app.enableCors({
+    credentials: true,
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+    maxAge: 3600,
+    origin: configService.get('ALLOWED_HOSTS'),
+  });
+
+  app.setGlobalPrefix(globalPrefix);
 
   app.useGlobalFilters(
     new I18nValidationExceptionFilter({
@@ -39,12 +56,13 @@ async function bootstrap() {
   app.useGlobalPipes(
     new ValidationPipe({
       exceptionFactory: i18nValidationErrorFactory,
+      whitelist: true,
+      transform: true,
+      forbidUnknownValues: false,
     }),
   );
 
   useContainer(app.select(AppModule), { fallbackOnErrors: true });
-
-  app.use(helmet());
 
   app.use(
     mongoSanitize({
@@ -65,7 +83,9 @@ async function bootstrap() {
 
   await app.listen(+configService.get<string>('PORT')! || 3000, () => {
     logger.log(
-      `Server running on port ${+configService.get<string>('PORT')! || 3000}`,
+      `🚀 Application is running on port: ${
+        +configService.get<string>('PORT')! || 3000
+      }`,
     );
   });
 }

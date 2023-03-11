@@ -1,0 +1,14 @@
+{
+  "success": {
+    "create": "تم اضافة {entity} بنجاح",
+    "update": "تم تعديل {entity} بنجاح",
+    "delete": "تم حذف {entity} بنجاح"
+  },
+  "errors": {
+    "create": "حدث خطأ عند صنع {entity}",
+    "update": "حدث خطأ عند تحديث {entity}",
+    "delete": "حدث خطأ عند حذف {entity}",
+    "readAll": "حدث خطأ عند استرجاع مجموعة {entity}",
+    "readOne": "حدث خطأ عند استرجاع {entity}"
+  }
+}

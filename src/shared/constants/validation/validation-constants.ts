@@ -1,3 +1,5 @@
+import { MulterOptions } from '@nestjs/platform-express/multer/interfaces/multer-options.interface';
+
 export const numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 export const specialCharacters = [
   '.',
@@ -79,16 +81,19 @@ export const uppercaseLetters = [
   ' ',
 ];
 
-export const imageFormats = [
-  'png',
-  'jpeg',
-  'apng',
-  'avif',
-  'jpg',
-  'jfif',
-  'pjpeg',
-  'pjp',
-  'tiff',
-  'tif',
-  'ico',
+export const validImageFormats = ['jpeg', 'png', 'bmp'];
+
+export const validVideoFormats = ['mp4', 'mov'];
+
+export const fileValidators: MulterOptions = {
+  limits: {
+    files: 2,
+    fields: 2,
+    fileSize: 2786000000,
+  },
+};
+
+export const fileFields = [
+  { name: 'image', maxCount: 1 },
+  { name: 'video', maxCount: 1 },
 ];

@@ -1,12 +1,23 @@
 import { Module } from '@nestjs/common';
 import { DynamicTranslationService } from './dynamic-translation.service';
-import { HealthModule } from './health/health.module';
-import { ServerLogger } from './logger/server-logger';
+import { ServerAccessLogger } from './logger/server-access.logger';
+import { ServerActionLogger } from './logger/server-action.logger';
+import { ServerAPILogger } from './logger/server-api.logger';
 
 @Module({
   controllers: [],
-  providers: [ServerLogger, DynamicTranslationService],
-  imports: [HealthModule],
-  exports: [DynamicTranslationService, ServerLogger, HealthModule],
+  providers: [
+    DynamicTranslationService,
+    ServerAPILogger,
+    ServerAccessLogger,
+    ServerActionLogger,
+  ],
+  imports: [],
+  exports: [
+    DynamicTranslationService,
+    ServerAPILogger,
+    ServerAccessLogger,
+    ServerActionLogger,
+  ],
 })
 export class ServicesModule {}

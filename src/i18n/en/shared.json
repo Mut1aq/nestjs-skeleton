@@ -1,25 +1,18 @@
 {
   "errors": {
     "error": "Something Went Wrong",
-    "user": "User was not found"
+    "user": "User was not found",
+    "post": "Post was not found",
+    "comment": "Comment was not found",
+    "admin": "Admin was not found"
   },
   "success": {
     "success": "Success"
   },
-  "dtos": {
-    "property": {
-      "fullName": "Full Name",
-      "email": "Email",
-      "password": "Password"
-    },
-    "constraint": {
-      "uppercase": "An Uppercase Letter",
-      "lowercase": "A Lowercase Letter",
-      "number": "A Number",
-      "specialCharacter": "A Special Character"
-    }
-  },
   "entities": {
-    "user": "User"
+    "user": "User",
+    "admin": "Admin",
+    "post": "Post",
+    "comment": "Comment"
   }
 }
