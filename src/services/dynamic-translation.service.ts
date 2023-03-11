@@ -1,26 +1,45 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { PathImpl2 } from '@nestjs/config';
 import { I18nService } from 'nestjs-i18n';
+import { I18nTranslations } from 'src/generated/i18n.generated';
+import { checkNullability } from 'src/shared/util/check-nullability.util';
 
 @Injectable()
 export class DynamicTranslationService {
-  constructor(private readonly i18n: I18nService) {}
+  constructor(private readonly i18n: I18nService<I18nTranslations>) {}
 
-  async passwordTranslation(
-    constraint: string,
-    property: string,
-  ): Promise<string> {
-    constraint = await this.i18n.translate(
-      'shared.dtos.constraint.' + constraint,
-    );
-    property = await this.i18n.translate('shared.dtos.property.' + property);
-
-    const message = await this.i18n.translate('validation.contains', {
-      args: {
-        property,
-        constraint,
+  async HTTPErrorWithOneArg(
+    error: any,
+    firstTranslation: PathImpl2<I18nTranslations>,
+    secondTranslation: PathImpl2<I18nTranslations>,
+  ): Promise<void> {
+    throw new HttpException(
+      checkNullability(error.message)
+        ? error.message
+        : this.i18n.translate(firstTranslation, {
+            args: {
+              entity: this.i18n.translate(secondTranslation),
+            },
+          }),
+      HttpStatus.AMBIGUOUS,
+      {
+        cause: new Error(error as string),
       },
-    });
+    );
+  }
 
-    return message;
+  async HTTPErrorWithNoArgs(
+    error: any,
+    firstTranslation: PathImpl2<I18nTranslations>,
+  ): Promise<void> {
+    throw new HttpException(
+      checkNullability(error.message)
+        ? error.message
+        : this.i18n.translate(firstTranslation),
+      HttpStatus.AMBIGUOUS,
+      {
+        cause: new Error(error as string),
+      },
+    );
   }
 }

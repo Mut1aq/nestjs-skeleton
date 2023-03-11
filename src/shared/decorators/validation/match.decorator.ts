@@ -15,7 +15,7 @@ export class MatchConstraint implements ValidatorConstraintInterface {
     const relatedValue = objectProperties[relatedPropertyName]; // original value (decorator)
     return value === relatedValue;
   }
-  defaultMessage(validationArguments?: ValidationArguments): string {
+  defaultMessage(_?: ValidationArguments): string {
     return 'validation.confirmPasswordMatch';
   }
 }

@@ -15,7 +15,7 @@ export class PasswordContainsNumbersConstraint
 {
   async validate(
     value: string = '',
-    validationArguments?: ValidationArguments,
+    _?: ValidationArguments,
   ): Promise<boolean> {
     for (const number of numbers) {
       if (value.includes(`${number}`)) return true;
@@ -26,9 +26,9 @@ export class PasswordContainsNumbersConstraint
 
   defaultMessage(validationArguments?: ValidationArguments): any {
     if (validationArguments?.property === 'confirmPassword') {
-      return 'validation.confirmPasswordContains.uppercase';
+      return 'validation.confirmPasswordContains.number';
     }
-    return 'validation.passwordContains.uppercase';
+    return 'validation.passwordContains.number';
   }
 }
 /**

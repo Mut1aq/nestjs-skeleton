@@ -3,6 +3,7 @@ import { CustomExceptionFilter } from 'src/filters/custom-exception.filter';
 import { CustomThrottlerGuard } from 'src/guards/custom-throttler.guard';
 import { AccessTokenGuard } from 'src/guards/access-token.guard';
 import { TranslationInterceptor } from 'src/interceptors/translation.interceptor';
+import { RoleGuard } from 'src/guards/role.guard';
 
 export const GlobalAccessTokenGuard = {
   provide: APP_GUARD,
@@ -22,4 +23,9 @@ export const GlobalCustomExceptionFilter = {
 export const GlobalThrottlerGuard = {
   provide: APP_GUARD,
   useClass: CustomThrottlerGuard,
+};
+
+export const GlobalRoleGuard = {
+  provide: APP_GUARD,
+  useClass: RoleGuard,
 };

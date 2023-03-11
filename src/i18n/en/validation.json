@@ -7,6 +7,9 @@
   "email": "You must enter a valid email",
   "minLength": "{property} must be more than {characters} characters",
   "maxLength": "{property} must be less than {characters} characters",
+  "phoneNumber": "You must enter a valid Phone Number",
+  "uniqueUsername": "This username already exists, please choose another one",
+  "uniquePhoneNumber": "This phone number already exists, please choose another one",
   "uniqueEmail": "This email already exists, please choose another one",
   "passwordContains": {
     "uppercase": "Password must contain an uppercase letter",
@@ -22,6 +25,23 @@
   },
   "date": "Date Format Must be dd/mm/yy",
   "confirmPasswordMatch": "Confirmed password must match password",
+  "maxDate": "You must be older than 13 to register",
   "invalidMongoDBID": "The ID is invalid",
-  "throttlerError": "You have made too many requests, please wait at least a minute"
+  "throttlerError": "You have made too many requests, please wait at least a minute",
+  "usernameAcceptedChar": "Username must only contain number, characters, '.', '_'",
+  "consecutiveDots": "Username Can't have consecutive dots",
+  "leadingTrillingDot": "Username Can't start or end with a dot",
+  "files": {
+    "imageType": "An image can only have a 'jpeg', 'png', and 'bmp' file extension",
+    "videoType": "A Video can only have a 'mp4', and 'mov' file extension",
+    "imageSize": "An image size must not exceed 8MB",
+    "videoSize": "A video size must not exceed 250MB"
+  },
+  "post": {
+    "allThree": "You can't add image, video, text together",
+    "imageAndVideo": "You can't add an image and a video together",
+    "imageAndText": "You can't add an image and a text together",
+    "textAndVideo": "You can't add a text and a video together",
+    "atLeastOne": "You must provide at least an image, video, or text in order to publish a post"
+  }
 }

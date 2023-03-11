@@ -1,0 +1,9 @@
+{
+  "errors": {
+    "reelsApplication": "Something went wrong with your application for becoming a service provider ",
+    "reelsApplicationFiles": "You must provide an identity image, and a sample video to apply to become a service provider"
+  },
+  "success": {
+    "reelsApplication": "Your Application for becoming a service provider has been sent successfully"
+  }
+}
