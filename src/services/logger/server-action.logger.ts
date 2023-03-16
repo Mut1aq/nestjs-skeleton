@@ -3,6 +3,7 @@ import { createWriteStream, existsSync, mkdirSync, WriteStream } from 'fs';
 import { format } from 'util';
 import { Types } from 'mongoose';
 import { UserType, Message, ObjectType } from './logger.interface';
+import { checkNullability } from 'src/shared/util/check-nullability.util';
 
 export class ServerActionLogger implements LoggerService {
   logFile: WriteStream | null = null;
@@ -11,10 +12,8 @@ export class ServerActionLogger implements LoggerService {
     this._createOrPrepareActionFile();
   }
 
-  debug(_: any, __: string = 'DEBUG') {}
   error(_: any, __: string = 'ERROR') {}
   log(_: any, __: string = 'LOG') {}
-  verbose(_: any, __ = 'VERBOSE') {}
   warn(_: any, __ = 'WARN') {}
 
   actionLog(
@@ -23,7 +22,7 @@ export class ServerActionLogger implements LoggerService {
     userID: Types.ObjectId,
     message: Message,
     object: ObjectType,
-    objectID: Types.ObjectId,
+    objectID?: Types.ObjectId,
   ) {
     this._logAction(
       this._formatMessageForLogFile(
@@ -47,9 +46,11 @@ export class ServerActionLogger implements LoggerService {
     userID: Types.ObjectId,
     message: Message,
     object: ObjectType,
-    objectID: Types.ObjectId,
+    objectID?: Types.ObjectId,
   ) {
-    return `[${userType}] ${email} - [ID] ${userID} - [ON] ${this._getDate()} - ${message} - [A] ${object} - [ID] ${objectID}`;
+    return `[${userType}] ${email} - [ID] ${userID} - [ON] ${this._getDate()} - [DID] ${message} - [A] ${object} ${
+      checkNullability(objectID) ? '[ID] ' + objectID : ''
+    } - `;
   }
 
   private _getDate() {

@@ -23,11 +23,11 @@
     "colId": "2533cb1e-0ef9-4b34-b7ba-dc6fe71b25b5",
     "containerId": "d4de7cec-8f8e-42cb-b89a-a3b36e2d90a8",
     "name": "register",
-    "url": "auth/register",
+    "url": "auth/register-user",
     "method": "POST",
     "sortNum": 20000,
     "created": "2022-12-30T21:14:18.378Z",
-    "modified": "2022-12-30T22:56:22.202Z",
+    "modified": "2023-03-16T03:16:29.392Z",
     "headers": [],
     "params": [],
     "body": {

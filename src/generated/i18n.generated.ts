@@ -7,35 +7,70 @@ export type I18nTranslations = {
             "unauthorized": string;
             "unauthenticated": string;
             "wrongEmailOrPassword": string;
-        };
-        "success": {
+            "wrongCred": string;
             "login": string;
             "register": string;
+            "ability": {
+                "create": string;
+                "read": string;
+                "update": string;
+                "delete": string;
+            };
+        };
+        "success": {
+            "register": string;
+        };
+    };
+    "entities": {
+        "success": {
+            "create": string;
+            "update": string;
+            "delete": string;
+        };
+        "errors": {
+            "create": string;
+            "update": string;
+            "delete": string;
+            "readAll": string;
+            "readOne": string;
+        };
+    };
+    "post": {
+        "errors": {
+            "view": string;
+            "like": string;
+            "addTextToMediaPost": string;
+        };
+        "success": {
+            "view": string;
+            "like": string;
         };
     };
     "shared": {
         "errors": {
             "error": string;
             "user": string;
+            "post": string;
+            "comment": string;
+            "admin": string;
         };
         "success": {
             "success": string;
         };
-        "dtos": {
-            "property": {
-                "fullName": string;
-                "email": string;
-                "password": string;
-            };
-            "constraint": {
-                "uppercase": string;
-                "lowercase": string;
-                "number": string;
-                "specialCharacter": string;
-            };
-        };
         "entities": {
             "user": string;
+            "admin": string;
+            "post": string;
+            "comment": string;
+        };
+    };
+    "user": {
+        "errors": {
+            "reelsApplication": string;
+            "reelsApplicationFiles": string;
+        };
+        "success": {
+            "reelsApplication": string;
         };
     };
     "validation": {
@@ -46,8 +81,12 @@ export type I18nTranslations = {
         "max": string;
         "email": string;
         "minLength": string;
+        "phoneNumber": string;
         "maxLength": string;
         "uniqueEmail": string;
+        "uniqueUsername": string;
+        "uniquePhoneNumber": string;
+        "maxDate": string;
         "passwordContains": {
             "uppercase": string;
             "lowercase": string;
@@ -63,6 +102,23 @@ export type I18nTranslations = {
         "date": string;
         "confirmPasswordMatch": string;
         "invalidMongoDBID": string;
+        "throttlerError": string;
+        "usernameAcceptedChar": string;
+        "consecutiveDots": string;
+        "leadingTrillingDot": string;
+        "files": {
+            "imageType": string;
+            "videoType": string;
+            "imageSize": string;
+            "videoSize": string;
+        };
+        "post": {
+            "allThree": string;
+            "imageAndVideo": string;
+            "imageAndText": string;
+            "textAndVideo": string;
+            "atLeastOne": string;
+        };
     };
 };
 export type I18nPath = Path<I18nTranslations>;

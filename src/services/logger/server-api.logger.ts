@@ -4,10 +4,8 @@ import { format } from 'util';
 import { ColorScheme } from 'src/shared/interfaces/general/color-scheme.interface';
 import {
   APIColorScheme,
-  DebugColorScheme,
   ErrorColorScheme,
   LogColorScheme,
-  VerboseColorScheme,
   WarnColorScheme,
 } from '../../shared/constants/general/pallet';
 
@@ -24,9 +22,7 @@ export class ServerAPILogger implements LoggerService {
     if (!this.logFile)
       this.logFile = createWriteStream(this.filePath, { flags: 'a' }); // a for append/ w for write
   }
-  debug(message: any, context: string = 'DEBUG') {
-    this.basicLog(message, context, 'DEBUG', DebugColorScheme);
-  }
+
   error(message: any, context: string = 'ERROR') {
     this.basicLog(message, context, 'ERROR', ErrorColorScheme);
   }
@@ -35,9 +31,6 @@ export class ServerAPILogger implements LoggerService {
     this.basicLog(message, context, 'LOG', LogColorScheme);
   }
 
-  verbose(message: any, context = 'VERBOSE') {
-    this.basicLog(message, context, 'VERBOSE', VerboseColorScheme); // whatever that means -Talha
-  }
   warn(message: any, context = 'WARN') {
     this.basicLog(message, context, 'WARN', WarnColorScheme);
   }
@@ -49,7 +42,7 @@ export class ServerAPILogger implements LoggerService {
     colorScheme: ColorScheme,
   ) {
     const { messageColor, contextColor } = colorScheme;
-    const customMessage = `${messageColor}[Eve] ${
+    const customMessage = `${messageColor}[Your Parts] ${
       process.pid
     }  - \x1B[39m${this._getDate()}     ${messageColor}${type}\x1B[39m ${contextColor}[${context}]\x1B[39m ${messageColor}${message}\x1B[39m`;
     console.log(customMessage);
@@ -59,7 +52,7 @@ export class ServerAPILogger implements LoggerService {
     message: string,
     context: any = 'API',
     reqInfo: any,
-    statusCode: number | '🚀',
+    statusCode: number,
     error: string | null = null,
   ) {
     const scheme = error ? ErrorColorScheme : APIColorScheme;
@@ -76,7 +69,7 @@ export class ServerAPILogger implements LoggerService {
     this.logFile?.write(format('', message) + '\n');
   }
 
-  private _formatMessageForLogFile(req: any, statusCode: number | '🚀' = 500) {
+  private _formatMessageForLogFile(req: any, statusCode = 500) {
     const { hostname, method, headers, originalUrl, ip } = req;
 
     return `[HOST] ${hostname} - ${this._getDate()} [STATUS] ${statusCode} - [METHOD] ${method} - [URL] ${originalUrl} - [IP] ${ip} - [USER-AGENT] ${

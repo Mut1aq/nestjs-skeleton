@@ -60,7 +60,7 @@ export class AuthService {
       this.configService.get<number>('REDIS_EXPIRY_FOR_TOKEN') as number,
     );
 
-    this.serverAccessLogger.AccessLog(email, 'DEFAULT', userD, 'LOGGED IN');
+    this.serverAccessLogger.accessLog(email, 'DEFAULT', userD, 'LOGGED IN');
 
     return {
       accessToken: tokens.accessToken,
@@ -84,7 +84,7 @@ export class AuthService {
       this.configService.get<number>('REDIS_EXPIRY_FOR_TOKEN') as number,
     );
 
-    this.serverAccessLogger.AccessLog(email, 'ADMIN', adminID, 'LOGGED IN');
+    this.serverAccessLogger.accessLog(email, 'ADMIN', adminID, 'LOGGED IN');
 
     return {
       accessToken: tokens.accessToken,
@@ -96,7 +96,7 @@ export class AuthService {
 
     await this.redis.del(adminID.toString());
 
-    this.serverAccessLogger.AccessLog(
+    this.serverAccessLogger.accessLog(
       admin?.email as string,
       'ADMIN',
       adminID,
@@ -109,7 +109,7 @@ export class AuthService {
     let userType: UserType = 'DEFAULT';
 
     await this.redis.del(userD.toString());
-    this.serverAccessLogger.AccessLog(
+    this.serverAccessLogger.accessLog(
       user?.email,
       userType,
       userD,

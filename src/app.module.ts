@@ -20,27 +20,27 @@ import {
   ConfigOptions,
   ThrottlerOptions,
   I18nModuleOptions,
+  BullOptions,
+  MongooseOptions,
+  RedisOptions,
 } from './shared/configs/app-options';
+import { DecoratorsModule } from './shared/decorators/decorators.module';
+import { DevtoolsModule } from '@nestjs/devtools-integration';
 import {
   GlobalGuards,
   GlobalFilters,
   GlobalInterceptors,
-  MongooseConfig,
   GlobalServices,
-  BullConfig,
-  RedisConfig,
 } from './shared/configs/app-configs';
-import { DecoratorsModule } from './shared/decorators/decorators.module';
-import { DevtoolsModule } from '@nestjs/devtools-integration';
 
 @Module({
   imports: [
     ConfigModule.forRoot(ConfigOptions),
-    MongooseModule.forRootAsync(MongooseConfig),
+    MongooseModule.forRootAsync(MongooseOptions),
     ThrottlerModule.forRoot(ThrottlerOptions),
     I18nModule.forRoot(I18nModuleOptions),
-    CacheModule.registerAsync<any>(RedisConfig),
-    BullModule.forRootAsync(BullConfig),
+    CacheModule.registerAsync<any>(RedisOptions),
+    BullModule.forRootAsync(BullOptions),
     ScheduleModule.forRoot(),
     DevtoolsModule.register({
       http: process.env.NODE_ENV !== 'production',
