@@ -2,16 +2,15 @@ export type Message =
   | 'CREATED'
   | 'UPDATED'
   | 'DELETED'
-  | 'FOLLOWED'
-  | 'UNFOLLOWED'
-  | 'REPORTED'
-  | 'BLOCKED';
+  | 'PROPOSED'
+  | 'READ'
+  | 'BOUGHT'
+  | 'SOLD';
 
-export type ObjectType =
-  | 'POST'
-  | 'COMMENT'
-  | 'REPORT'
-  | 'FOLLOWER'
-  | 'FOLLOWING';
+export type ObjectType = 'POST' | 'POSTS' | 'COMMENT' | 'COMMENTS' | 'PROPOSAL';
 
-export type UserType = 'ADMIN' | 'SERVICE PROVIDER' | 'DEFAULT' | 'DOCTOR';
+export type UserType =
+  | 'ADMIN'
+  | 'GROUP OWNER'
+  | 'DEFAULT'
+  | 'GROUP Participant';

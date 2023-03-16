@@ -11,11 +11,11 @@ import {
 import { AppModule } from './app.module';
 import { ServerAPILogger } from './services/logger/server-api.logger';
 import { SwaggerOptions } from './shared/configs/app-options';
-import { SwaggerConfig } from './shared/configs/app-configs';
 import * as compression from 'compression';
 import * as mongoSanitize from 'express-mongo-sanitize';
 import * as bodyParser from 'body-parser';
 import { NestExpressApplication } from '@nestjs/platform-express';
+import { SwaggerConfig } from './shared/configs/app-options';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
@@ -68,7 +68,9 @@ async function bootstrap() {
     mongoSanitize({
       dryRun: true,
       onSanitize: ({ req, key }) => {
-        logger.warn(`[DryRun] This request[${key}] will be sanitized ${req}`);
+        logger.warn(
+          `❌ [DryRun] This request[${key}] will be sanitized ${req}`,
+        );
       },
     }),
   );

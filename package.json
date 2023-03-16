@@ -2,7 +2,7 @@
   "name": "nestjs-skeleton",
   "version": "0.0.1",
   "engines": {
-    "node": "18.12.1"
+    "node": "18.15.0"
   },
   "description": "starter code for my projects",
   "author": "Mutlaq Alsadeed",

@@ -11,13 +11,11 @@ export class ServerAccessLogger implements LoggerService {
     this._createOrPrepareActionFile();
   }
 
-  debug(_: any, __: string = 'DEBUG') {}
   error(_: any, __: string = 'ERROR') {}
   log(_: any, __: string = 'LOG') {}
-  verbose(_: any, __ = 'VERBOSE') {}
   warn(_: any, __ = 'WARN') {}
 
-  AccessLog(
+  accessLog(
     email: string,
     userType: UserType,
     userID: Types.ObjectId,
@@ -36,7 +34,7 @@ export class ServerAccessLogger implements LoggerService {
     email: string,
     userID: Types.ObjectId,
     message: 'LOGGED IN' | 'LOGGED OUT',
-    userType: 'ADMIN' | 'SERVICE PROVIDER' | 'DEFAULT' | 'DOCTOR',
+    userType: UserType,
   ) {
     return `[${userType}] ${email} - [ID] ${userID} - [ON] ${this._getDate()} - [LOG] ${message}`;
   }

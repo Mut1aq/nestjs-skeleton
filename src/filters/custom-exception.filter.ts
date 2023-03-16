@@ -25,7 +25,7 @@ export class CustomExceptionFilter implements ExceptionFilter {
 
     this.APILogger.APIlog(
       request.originalUrl,
-      'CustomExceptionFilter',
+      '👿 ',
       request,
       status,
       exception?.message,
