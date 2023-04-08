@@ -9,11 +9,11 @@ import {
   IsOptional,
 } from 'class-validator';
 import { i18nValidationMessage } from 'nestjs-i18n';
-import { PasswordContainsLowercaseLetter } from 'src/shared/decorators/validation/password/lowercase-letters.decorator';
-import { PasswordContainsNumbers } from 'src/shared/decorators/validation/password/numbers.decorator';
-import { PasswordContainsSpecialCharacter } from 'src/shared/decorators/validation/password/special-characters.decorator';
-import { PasswordContainsUppercaseLetter } from 'src/shared/decorators/validation/password/uppercase-letters.decorator';
-import { Username } from 'src/shared/decorators/validation/username.decorator';
+import { PasswordContainsLowercaseLetter } from 'src/core/decorators/validation/password/lowercase-letters.decorator';
+import { PasswordContainsNumbers } from 'src/core/decorators/validation/password/numbers.decorator';
+import { PasswordContainsSpecialCharacter } from 'src/core/decorators/validation/password/special-characters.decorator';
+import { PasswordContainsUppercaseLetter } from 'src/core/decorators/validation/password/uppercase-letters.decorator';
+import { Username } from 'src/core/decorators/validation/username.decorator';
 
 export class LoginUserDto {
   @ApiProperty({
@@ -24,17 +24,28 @@ export class LoginUserDto {
     uniqueItems: true,
     type: 'string',
   })
-  @IsOptional()
   @Transform((param) => param?.value?.toLowerCase()?.trim())
-  @IsEmail(undefined, {
-    message: i18nValidationMessage('validation.email'),
-  })
   @MinLength(5, {
     message: i18nValidationMessage('validation.minLength', {
       property: 'Email',
       characters: 5,
     }),
   })
+  @MaxLength(320, {
+    message: i18nValidationMessage('validation.maxLength', {
+      property: 'Email',
+      characters: 320,
+    }),
+  })
+  @IsEmail(undefined, {
+    message: i18nValidationMessage('validation.email'),
+  })
+  @IsNotEmpty({
+    message: i18nValidationMessage('validation.isNotEmpty', {
+      property: 'Email',
+    }),
+  })
+  @IsOptional()
   readonly email!: string;
 
   //*******************************************/
@@ -46,16 +57,8 @@ export class LoginUserDto {
     example: 'mut1aq',
     name: 'username',
   })
-  @IsNotEmpty({
-    message: i18nValidationMessage('validation.isNotEmpty', {
-      property: 'Username',
-    }),
-  })
-  @IsString({
-    message: i18nValidationMessage('validation.isString', {
-      property: 'Username',
-    }),
-  })
+  @Transform((param) => param.value.toLowerCase().trim())
+  @Username()
   @MinLength(3, {
     message: i18nValidationMessage('validation.minLength', {
       property: 'Username',
@@ -68,8 +71,17 @@ export class LoginUserDto {
       characters: 30,
     }),
   })
-  @Transform((param) => param.value.toLowerCase().trim())
-  @Username()
+  @IsString({
+    message: i18nValidationMessage('validation.isString', {
+      property: 'Username',
+    }),
+  })
+  @IsNotEmpty({
+    message: i18nValidationMessage('validation.isNotEmpty', {
+      property: 'Username',
+    }),
+  })
+  @IsOptional()
   username!: string;
 
   //*******************************************/
@@ -84,12 +96,10 @@ export class LoginUserDto {
     pattern: `/^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[a-zA-Z!#$@^%&?.-_-*/ "])[a-zA-Z0-9!#$@^%&?.-_-*/]{8,20}$/`,
     type: 'string',
   })
-  @IsOptional()
-  @IsString({
-    message: i18nValidationMessage('validation.isString', {
-      property: 'Password',
-    }),
-  })
+  @PasswordContainsNumbers()
+  @PasswordContainsSpecialCharacter()
+  @PasswordContainsLowercaseLetter()
+  @PasswordContainsUppercaseLetter()
   @MinLength(8, {
     message: i18nValidationMessage('validation.minLength', {
       property: 'Password',
@@ -102,9 +112,15 @@ export class LoginUserDto {
       characters: 20,
     }),
   })
-  @PasswordContainsNumbers()
-  @PasswordContainsSpecialCharacter()
-  @PasswordContainsLowercaseLetter()
-  @PasswordContainsUppercaseLetter()
+  @IsString({
+    message: i18nValidationMessage('validation.isString', {
+      property: 'Password',
+    }),
+  })
+  @IsNotEmpty({
+    message: i18nValidationMessage('validation.isNotEmpty', {
+      property: 'Password',
+    }),
+  })
   readonly password!: string;
 }

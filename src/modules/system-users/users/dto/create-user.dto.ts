@@ -10,13 +10,13 @@ import {
   MinLength,
 } from 'class-validator';
 import { i18nValidationMessage } from 'nestjs-i18n';
-import { Match } from 'src/shared/decorators/validation/match.decorator';
-import { PasswordContainsLowercaseLetter } from 'src/shared/decorators/validation/password/lowercase-letters.decorator';
-import { PasswordContainsNumbers } from 'src/shared/decorators/validation/password/numbers.decorator';
-import { PasswordContainsSpecialCharacter } from 'src/shared/decorators/validation/password/special-characters.decorator';
-import { PasswordContainsUppercaseLetter } from 'src/shared/decorators/validation/password/uppercase-letters.decorator';
-import { UniqueUserProperty } from 'src/shared/decorators/validation/unique-property.decorator';
-import { Username } from 'src/shared/decorators/validation/username.decorator';
+import { Match } from 'src/core/decorators/validation/match.decorator';
+import { PasswordContainsLowercaseLetter } from 'src/core/decorators/validation/password/lowercase-letters.decorator';
+import { PasswordContainsNumbers } from 'src/core/decorators/validation/password/numbers.decorator';
+import { PasswordContainsSpecialCharacter } from 'src/core/decorators/validation/password/special-characters.decorator';
+import { PasswordContainsUppercaseLetter } from 'src/core/decorators/validation/password/uppercase-letters.decorator';
+import { UniqueUserProperty } from 'src/core/decorators/validation/unique-property.decorator';
+import { Username } from 'src/core/decorators/validation/username.decorator';
 import { thirteenYearsAgo } from 'src/shared/util/date.util';
 
 export class CreateUserDto {

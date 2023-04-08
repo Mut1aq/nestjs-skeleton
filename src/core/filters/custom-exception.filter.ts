@@ -5,8 +5,9 @@ import {
   HttpException,
   Injectable,
 } from '@nestjs/common';
-import { Request, Response } from 'express';
+import { Response } from 'express';
 import { I18nService } from 'nestjs-i18n';
+import { Request } from 'src/shared/interfaces/api/request.interface';
 import { ServerAPILogger } from 'src/services/logger/server-api.logger';
 
 @Catch(HttpException)

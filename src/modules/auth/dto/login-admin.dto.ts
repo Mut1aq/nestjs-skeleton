@@ -8,10 +8,10 @@ import {
   MaxLength,
 } from 'class-validator';
 import { i18nValidationMessage } from 'nestjs-i18n';
-import { PasswordContainsLowercaseLetter } from 'src/shared/decorators/validation/password/lowercase-letters.decorator';
-import { PasswordContainsNumbers } from 'src/shared/decorators/validation/password/numbers.decorator';
-import { PasswordContainsSpecialCharacter } from 'src/shared/decorators/validation/password/special-characters.decorator';
-import { PasswordContainsUppercaseLetter } from 'src/shared/decorators/validation/password/uppercase-letters.decorator';
+import { PasswordContainsLowercaseLetter } from 'src/core/decorators/validation/password/lowercase-letters.decorator';
+import { PasswordContainsNumbers } from 'src/core/decorators/validation/password/numbers.decorator';
+import { PasswordContainsSpecialCharacter } from 'src/core/decorators/validation/password/special-characters.decorator';
+import { PasswordContainsUppercaseLetter } from 'src/core/decorators/validation/password/uppercase-letters.decorator';
 
 export class LoginAdminDto {
   @ApiProperty({

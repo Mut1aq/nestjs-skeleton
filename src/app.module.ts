@@ -24,7 +24,7 @@ import {
   MongooseOptions,
   RedisOptions,
 } from './shared/configs/app-options';
-import { DecoratorsModule } from './shared/decorators/decorators.module';
+import { DecoratorsModule } from './core/decorators/decorators.module';
 import { DevtoolsModule } from '@nestjs/devtools-integration';
 import {
   GlobalGuards,
@@ -32,6 +32,7 @@ import {
   GlobalInterceptors,
   GlobalServices,
 } from './shared/configs/app-configs';
+import { RealIPMiddleware } from './core/middlewares/ip.middleware';
 
 @Module({
   imports: [
@@ -61,7 +62,7 @@ import {
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(helmet()).forRoutes({
+    consumer.apply(helmet(), RealIPMiddleware).forRoutes({
       path: '*',
       method: RequestMethod.ALL,
     });

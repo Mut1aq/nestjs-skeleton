@@ -12,4 +12,5 @@ export interface Request<
     sub: Types.ObjectId;
     refreshToken: string;
   };
+  userIP: string;
 }
