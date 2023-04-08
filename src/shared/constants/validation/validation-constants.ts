@@ -1,6 +1,7 @@
 import { MulterOptions } from '@nestjs/platform-express/multer/interfaces/multer-options.interface';
 
 export const numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+export const stringNumbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
 export const specialCharacters = [
   '.',
   '*',

@@ -8,6 +8,7 @@ import {
   LogColorScheme,
   WarnColorScheme,
 } from '../../shared/constants/general/pallet';
+import { Request } from 'src/shared/interfaces/api/request.interface';
 
 export class ServerAPILogger implements LoggerService {
   logFile: WriteStream | null = null;
@@ -51,8 +52,8 @@ export class ServerAPILogger implements LoggerService {
   APIlog(
     message: string,
     context: any = 'API',
-    reqInfo: any,
-    statusCode: number,
+    reqInfo: Request,
+    statusCode: number | string,
     error: string | null = null,
   ) {
     const scheme = error ? ErrorColorScheme : APIColorScheme;
@@ -69,10 +70,13 @@ export class ServerAPILogger implements LoggerService {
     this.logFile?.write(format('', message) + '\n');
   }
 
-  private _formatMessageForLogFile(req: any, statusCode = 500) {
-    const { hostname, method, headers, originalUrl, ip } = req;
+  private _formatMessageForLogFile(
+    req: Request,
+    statusCode: string | number = 500,
+  ) {
+    const { hostname, method, headers, originalUrl, userIP } = req;
 
-    return `[HOST] ${hostname} - ${this._getDate()} [STATUS] ${statusCode} - [METHOD] ${method} - [URL] ${originalUrl} - [IP] ${ip} - [USER-AGENT] ${
+    return `[HOST] ${hostname} - ${this._getDate()} [STATUS] ${statusCode} - [METHOD] ${method} - [URL] ${originalUrl} - [IP] ${userIP} - [USER-AGENT] ${
       headers['user-agent']
     } - [LANGUAGE] ${headers['accept-language']}`;
   }

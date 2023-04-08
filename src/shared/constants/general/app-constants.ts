@@ -1,9 +1,9 @@
 import { APP_GUARD, APP_INTERCEPTOR, APP_FILTER } from '@nestjs/core';
-import { CustomExceptionFilter } from 'src/filters/custom-exception.filter';
-import { CustomThrottlerGuard } from 'src/guards/custom-throttler.guard';
-import { AccessTokenGuard } from 'src/guards/access-token.guard';
-import { TranslationInterceptor } from 'src/interceptors/translation.interceptor';
-import { RoleGuard } from 'src/guards/role.guard';
+import { CustomExceptionFilter } from 'src/core/filters/custom-exception.filter';
+import { CustomThrottlerGuard } from 'src/core/guards/custom-throttler.guard';
+import { AccessTokenGuard } from 'src/core/guards/access-token.guard';
+import { TranslationInterceptor } from 'src/core/interceptors/translation.interceptor';
+import { RoleGuard } from 'src/core/guards/role.guard';
 
 export const GlobalAccessTokenGuard = {
   provide: APP_GUARD,

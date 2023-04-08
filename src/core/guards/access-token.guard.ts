@@ -11,7 +11,7 @@ import { Reflector } from '@nestjs/core';
 import { JwtService } from '@nestjs/jwt';
 import { IncomingMessage } from 'http';
 import { Cache } from 'cache-manager';
-import { IS_PUBLIC_KEY } from 'src/shared/decorators/auth/public.decorator';
+import { IS_PUBLIC_KEY } from 'src/core/decorators/auth/public.decorator';
 import {
   checkNullability,
   checkObjectNullability,

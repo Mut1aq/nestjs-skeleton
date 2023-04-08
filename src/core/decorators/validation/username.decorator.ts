@@ -8,6 +8,8 @@ import {
 } from 'class-validator';
 import {
   lowercaseLetters,
+  numbers,
+  stringNumbers,
   uppercaseLetters,
 } from 'src/shared/constants/validation/validation-constants';
 import { checkNullability } from 'src/shared/util/check-nullability.util';
@@ -20,7 +22,14 @@ export class UsernameConstraint implements ValidatorConstraintInterface {
   async validate(username: string, __?: ValidationArguments): Promise<any> {
     if (!checkNullability(username)) return true;
     const usernameCharacters = username?.split('');
-    const acceptedChars = [...lowercaseLetters, ...uppercaseLetters, '.', '_'];
+    const acceptedChars = [
+      ...lowercaseLetters,
+      ...uppercaseLetters,
+      ...numbers,
+      ...stringNumbers,
+      '.',
+      '_',
+    ];
 
     const isUsernameContainUnwantedChars = usernameCharacters?.find(
       (usernameChar) => !acceptedChars?.includes(usernameChar),

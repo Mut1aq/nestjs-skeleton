@@ -8,12 +8,11 @@ import {
   MinLength,
 } from 'class-validator';
 import { i18nValidationMessage } from 'nestjs-i18n';
-import { Match } from 'src/shared/decorators/validation/match.decorator';
-import { PasswordContainsLowercaseLetter } from 'src/shared/decorators/validation/password/lowercase-letters.decorator';
-import { PasswordContainsNumbers } from 'src/shared/decorators/validation/password/numbers.decorator';
-import { PasswordContainsSpecialCharacter } from 'src/shared/decorators/validation/password/special-characters.decorator';
-import { PasswordContainsUppercaseLetter } from 'src/shared/decorators/validation/password/uppercase-letters.decorator';
-import { UniqueAdminProperty } from 'src/shared/decorators/validation/unique-property.decorator';
+import { Match } from 'src/core/decorators/validation/match.decorator';
+import { PasswordContainsLowercaseLetter } from 'src/core/decorators/validation/password/lowercase-letters.decorator';
+import { PasswordContainsNumbers } from 'src/core/decorators/validation/password/numbers.decorator';
+import { PasswordContainsSpecialCharacter } from 'src/core/decorators/validation/password/special-characters.decorator';
+import { PasswordContainsUppercaseLetter } from 'src/core/decorators/validation/password/uppercase-letters.decorator';
 
 export class CreateAdminDto {
   @ApiProperty({
@@ -38,9 +37,6 @@ export class CreateAdminDto {
       property: 'Email',
       characters: 5,
     }),
-  })
-  @UniqueAdminProperty('email', {
-    message: i18nValidationMessage('validation.uniqueEmail'),
   })
   readonly email!: string;
 

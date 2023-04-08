@@ -23,19 +23,19 @@ export class TranslationInterceptor implements NestInterceptor {
     const response = context.switchToHttp().getResponse();
     this.serverAPILogger.APIlog(
       request.originalUrl,
-      'TranslationInterceptor - ⏫ ',
+      'TranslationInterceptor - Request',
       request,
-      42069, // ! Nice
+      '🚀', // ! Nice
     );
     return next.handle().pipe(
       map(async (returnMessage: ReturnMessage & { error: any }) => {
         const isMessageAlreadyTranslated: boolean =
-          returnMessage?.message?.startsWith('Successfully') ||
-          (returnMessage?.message?.startsWith('Something') &&
+          returnMessage?.message?.toLowerCase().includes('successfully') ||
+          (returnMessage?.message?.toLowerCase().includes('something') &&
             !checkNullability(returnMessage.error));
         this.serverAPILogger.APIlog(
           request.originalUrl,
-          'TranslationInterceptor - ⏬ ',
+          'TranslationInterceptor - Response',
           request,
           response.statusCode,
         );

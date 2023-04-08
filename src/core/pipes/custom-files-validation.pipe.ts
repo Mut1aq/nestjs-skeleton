@@ -9,11 +9,11 @@ import { Readable } from 'stream';
 import {
   validImageFormats,
   validVideoFormats,
-} from '../constants/validation/validation-constants';
+} from '../../shared/constants/validation/validation-constants';
 import {
   checkNullability,
   checkObjectNullability,
-} from '../util/check-nullability.util';
+} from '../../shared/util/check-nullability.util';
 
 export interface Files {
   image: Express.Multer.File;
