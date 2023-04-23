@@ -137,5 +137,23 @@
       "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDJmODgzZTNkODllMDVkY2NlNTM1ZjkiLCJpYXQiOjE2ODA5MTUxOTIsImV4cCI6MTY4NjA5OTE5Mn0.OMHFCCv4jHCag50TZiXIRfcx-vGq7-bnodB_V1pr3dA"
     },
     "tests": []
+  },
+  {
+    "_id": "897f362f-1fa3-4331-a365-e84346a20c70",
+    "colId": "2533cb1e-0ef9-4b34-b7ba-dc6fe71b25b5",
+    "containerId": "b6c0f44b-1b70-4315-9998-9cd0d6efde58",
+    "name": "get feature collections",
+    "url": "maps/feature-collections",
+    "method": "GET",
+    "sortNum": 80000,
+    "created": "2023-04-23T22:15:47.532Z",
+    "modified": "2023-04-23T22:16:10.776Z",
+    "headers": [],
+    "params": [],
+    "auth": {
+      "type": "bearer",
+      "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDJmODgzZTNkODllMDVkY2NlNTM1ZjkiLCJpYXQiOjE2ODA5MTUxOTIsImV4cCI6MTY4NjA5OTE5Mn0.OMHFCCv4jHCag50TZiXIRfcx-vGq7-bnodB_V1pr3dA"
+    },
+    "tests": []
   }
 ]

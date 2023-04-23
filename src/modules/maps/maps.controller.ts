@@ -55,4 +55,9 @@ export class MapsController {
   getGEOLayers() {
     return this.mapsService.getGEOLayers();
   }
+
+  @Get('feature-collections')
+  getFeatureCollections() {
+    return this.mapsService.getFeatureCollections();
+  }
 }

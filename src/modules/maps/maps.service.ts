@@ -91,4 +91,11 @@ export class MapsService {
       })
       .sort({ collectionOrder: 1 });
   }
+
+  getFeatureCollections() {
+    return this.featureCollectionModel.find().populate({
+      path: 'features',
+      model: 'Feature',
+    });
+  }
 }
