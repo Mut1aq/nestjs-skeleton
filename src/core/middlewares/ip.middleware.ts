@@ -1,7 +1,7 @@
 import { Injectable, NestMiddleware } from '@nestjs/common';
 import { getClientIp } from '@supercharge/request-ip';
 import { NextFunction, Response } from 'express';
-import { Request } from 'src/shared/interfaces/api/request.interface';
+import { Request } from '@shared/interfaces/general/request.interface';
 
 @Injectable()
 export class RealIPMiddleware implements NestMiddleware {

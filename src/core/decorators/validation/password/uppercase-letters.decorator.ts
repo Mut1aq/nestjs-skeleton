@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { uppercaseLetters } from '@shared/constants/validation/validation-constants';
 import {
   ValidatorConstraint,
   ValidatorConstraintInterface,
@@ -6,7 +7,6 @@ import {
   ValidationOptions,
   registerDecorator,
 } from 'class-validator';
-import { uppercaseLetters } from 'src/shared/constants/validation/validation-constants';
 
 @ValidatorConstraint({ name: 'PasswordContainsUppercaseLetter' })
 @Injectable()

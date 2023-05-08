@@ -1,7 +1,10 @@
+import { UniqueUserProperty } from '@decorators/validation/unique-property.decorator';
+import { Username } from '@decorators/validation/username.decorator';
 import { ApiProperty } from '@nestjs/swagger';
+import { GeneralRegisterDto } from '@shared/dtos/general-register.dto';
+import { thirteenYearsAgo } from '@shared/util/date.util';
 import { Transform } from 'class-transformer';
 import {
-  IsEmail,
   IsNotEmpty,
   IsNumberString,
   IsString,
@@ -10,137 +13,8 @@ import {
   MinLength,
 } from 'class-validator';
 import { i18nValidationMessage } from 'nestjs-i18n';
-import { Match } from 'src/core/decorators/validation/match.decorator';
-import { PasswordContainsLowercaseLetter } from 'src/core/decorators/validation/password/lowercase-letters.decorator';
-import { PasswordContainsNumbers } from 'src/core/decorators/validation/password/numbers.decorator';
-import { PasswordContainsSpecialCharacter } from 'src/core/decorators/validation/password/special-characters.decorator';
-import { PasswordContainsUppercaseLetter } from 'src/core/decorators/validation/password/uppercase-letters.decorator';
-import { UniqueUserProperty } from 'src/core/decorators/validation/unique-property.decorator';
-import { Username } from 'src/core/decorators/validation/username.decorator';
-import { thirteenYearsAgo } from 'src/shared/util/date.util';
 
-export class CreateUserDto {
-  @ApiProperty({
-    description: "User's Email when registering",
-    example: 'mutlaqalsadeed@gmail.com',
-    name: 'email',
-    required: true,
-    uniqueItems: true,
-    minLength: 3,
-    maxLength: 737106,
-    isArray: false,
-    type: String,
-  })
-  @IsNotEmpty({
-    message: i18nValidationMessage('validation.isNotEmpty', {
-      property: 'Email',
-    }),
-  })
-  @Transform((param) => param?.value?.toLowerCase()?.trim())
-  @IsEmail(undefined, {
-    message: i18nValidationMessage('validation.email'),
-  })
-  @MinLength(3, {
-    message: i18nValidationMessage('validation.minLength', {
-      property: 'Email',
-      characters: 3,
-    }),
-  })
-  @MaxLength(737106, {
-    message: i18nValidationMessage('validation.maxLength', {
-      property: 'Email',
-      characters: 737106,
-    }),
-  })
-  @UniqueUserProperty('email', {
-    message: i18nValidationMessage('validation.uniqueEmail'),
-  })
-  readonly email!: string;
-
-  //*******************************************/
-
-  @ApiProperty({
-    description: "User's password when registering",
-    example: 'GreaTPassWord123',
-    name: 'password',
-    required: true,
-    minLength: 8,
-    maxLength: 20,
-    pattern: `/^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[a-zA-Z!#$@^%&?.-_-*/ "])[a-zA-Z0-9!#$@^%&?.-_-*/]{8,20}$/`,
-    type: 'string',
-  })
-  @IsNotEmpty({
-    message: i18nValidationMessage('validation.isNotEmpty', {
-      property: 'Password',
-    }),
-  })
-  @IsString({
-    message: i18nValidationMessage('validation.isString', {
-      property: 'Password',
-    }),
-  })
-  @MinLength(8, {
-    message: i18nValidationMessage('validation.minLength', {
-      property: 'Password',
-      characters: 8,
-    }),
-  })
-  @MaxLength(20, {
-    message: i18nValidationMessage('validation.maxLength', {
-      property: 'Password',
-      characters: 20,
-    }),
-  })
-  @PasswordContainsNumbers()
-  @PasswordContainsSpecialCharacter()
-  @PasswordContainsLowercaseLetter()
-  @PasswordContainsUppercaseLetter()
-  password!: string;
-
-  //*******************************************/
-
-  @ApiProperty({
-    description:
-      "Admin's confirm password when registering, must match password property",
-    example: 'GreaTPassWord123',
-    name: 'confirmPassword',
-    required: true,
-    minLength: 8,
-    maxLength: 20,
-    pattern: `/^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[a-zA-Z!#$@^%&?.-_-*/ "])[a-zA-Z0-9!#$@^%&?.-_-*/]{8,20}$/`,
-    type: 'string',
-  })
-  @IsNotEmpty({
-    message: i18nValidationMessage('validation.isNotEmpty', {
-      property: 'Confirm Password',
-    }),
-  })
-  @IsString({
-    message: i18nValidationMessage('validation.isString', {
-      property: 'Confirm Password',
-    }),
-  })
-  @MinLength(8, {
-    message: i18nValidationMessage('validation.minLength', {
-      property: 'Confirm Password',
-      characters: 8,
-    }),
-  })
-  @MaxLength(20, {
-    message: i18nValidationMessage('validation.maxLength', {
-      property: 'Confirm Password',
-      characters: 20,
-    }),
-  })
-  @PasswordContainsNumbers()
-  @PasswordContainsSpecialCharacter()
-  @PasswordContainsLowercaseLetter()
-  @PasswordContainsUppercaseLetter()
-  @Match('password')
-  readonly confirmPassword!: string;
-
-  //*******************************************/
-
+export class CreateUserDto extends GeneralRegisterDto {
   @ApiProperty({
     description: `User's username, must not have trilling or leading dots '..'.
      must not contain consecutive dots, and can only contain alphabets, dot, or underscores`,
@@ -152,16 +26,11 @@ export class CreateUserDto {
     maxLength: 30,
     isArray: false,
   })
-  @IsNotEmpty({
-    message: i18nValidationMessage('validation.isNotEmpty', {
-      property: 'Username',
-    }),
+  @UniqueUserProperty('username', {
+    message: i18nValidationMessage('validation.uniqueUsername'),
   })
-  @IsString({
-    message: i18nValidationMessage('validation.isString', {
-      property: 'Username',
-    }),
-  })
+  @Transform((param) => param.value.toLowerCase().trim())
+  @Username()
   @MinLength(3, {
     message: i18nValidationMessage('validation.minLength', {
       property: 'Username',
@@ -174,10 +43,15 @@ export class CreateUserDto {
       characters: 30,
     }),
   })
-  @Transform((param) => param.value.toLowerCase().trim())
-  @Username()
-  @UniqueUserProperty('username', {
-    message: i18nValidationMessage('validation.uniqueUsername'),
+  @IsString({
+    message: i18nValidationMessage('validation.isString', {
+      property: 'Username',
+    }),
+  })
+  @IsNotEmpty({
+    message: i18nValidationMessage('validation.isNotEmpty', {
+      property: 'Username',
+    }),
   })
   username!: string;
 
@@ -189,16 +63,17 @@ export class CreateUserDto {
     name: 'birthday',
     minimum: 13,
   })
+  @MaxDate(thirteenYearsAgo, {
+    message: i18nValidationMessage('validation.maxDate'),
+  })
+  @Transform(({ value }) => new Date(value))
   @IsNotEmpty({
     message: i18nValidationMessage('validation.isNotEmpty', {
       property: 'Birth Day',
     }),
   })
-  @Transform(({ value }) => new Date(value))
-  @MaxDate(thirteenYearsAgo, {
-    message: i18nValidationMessage('validation.maxDate'),
-  })
   birthday!: string;
+
   //*******************************************/
 
   @ApiProperty({
@@ -211,11 +86,6 @@ export class CreateUserDto {
     example: 'Mutlaq Alsadeed',
     name: 'firstName',
   })
-  @IsNotEmpty({
-    message: i18nValidationMessage('validation.isNotEmpty', {
-      property: 'First Name',
-    }),
-  })
   @MinLength(2, {
     message: i18nValidationMessage('validation.minLength', {
       property: 'First Name',
@@ -226,6 +96,16 @@ export class CreateUserDto {
     message: i18nValidationMessage('validation.maxLength', {
       property: 'First Name',
       characters: 120,
+    }),
+  })
+  @IsString({
+    message: i18nValidationMessage('validation.isString', {
+      property: 'First Name',
+    }),
+  })
+  @IsNotEmpty({
+    message: i18nValidationMessage('validation.isNotEmpty', {
+      property: 'First Name',
     }),
   })
   readonly firstName!: string;
@@ -242,11 +122,6 @@ export class CreateUserDto {
     example: 'Mutlaq Alsadeed',
     name: 'lastName',
   })
-  @IsNotEmpty({
-    message: i18nValidationMessage('validation.isNotEmpty', {
-      property: 'Last Name',
-    }),
-  })
   @MinLength(2, {
     message: i18nValidationMessage('validation.minLength', {
       property: 'Last Name',
@@ -257,6 +132,16 @@ export class CreateUserDto {
     message: i18nValidationMessage('validation.maxLength', {
       property: 'Last Name',
       characters: 120,
+    }),
+  })
+  @IsString({
+    message: i18nValidationMessage('validation.isString', {
+      property: 'Last Name',
+    }),
+  })
+  @IsNotEmpty({
+    message: i18nValidationMessage('validation.isNotEmpty', {
+      property: 'Last Name',
     }),
   })
   readonly lastName!: string;
@@ -273,10 +158,8 @@ export class CreateUserDto {
     isArray: false,
     name: 'phoneNumber',
   })
-  @IsNotEmpty({
-    message: i18nValidationMessage('validation.isNotEmpty', {
-      property: 'Phone Number',
-    }),
+  @UniqueUserProperty('phoneNumber', {
+    message: i18nValidationMessage('validation.uniquePhoneNumber'),
   })
   @MinLength(7, {
     message: i18nValidationMessage('validation.minLength', {
@@ -293,8 +176,10 @@ export class CreateUserDto {
   @IsNumberString(undefined, {
     message: i18nValidationMessage('validation.phoneNumber'),
   })
-  @UniqueUserProperty('phoneNumber', {
-    message: i18nValidationMessage('validation.uniquePhoneNumber'),
+  @IsNotEmpty({
+    message: i18nValidationMessage('validation.isNotEmpty', {
+      property: 'Phone Number',
+    }),
   })
   readonly phoneNumber!: string;
 }

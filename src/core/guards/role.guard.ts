@@ -7,9 +7,9 @@ import {
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { JwtService } from '@nestjs/jwt';
+import { TokenPayload } from '@shared/interfaces/general/token-payload.interface';
+import { checkNullability } from '@shared/util/check-nullability.util';
 import { Request } from 'express';
-import { TokenPayload } from 'src/shared/interfaces/api/token-payload.interface';
-import { checkNullability } from 'src/shared/util/check-nullability.util';
 
 @Injectable()
 export class RoleGuard implements CanActivate {

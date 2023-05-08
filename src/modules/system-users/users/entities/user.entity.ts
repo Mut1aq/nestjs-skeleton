@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Role } from '@shared/enums/role.enum';
+import { CloudinaryObject } from '@shared/interfaces/general/cloudinary-object.interface';
 import { HydratedDocument } from 'mongoose';
-
-import { CloudinaryObject } from 'src/shared/interfaces/general/cloudinary-object.interface';
 
 export type UserDocument = HydratedDocument<User>;
 
@@ -54,7 +54,7 @@ export class User {
     default: undefined,
     trim: true,
   })
-  firstName!: string | undefined;
+  firstName!: string;
 
   @Prop({
     type: String,
@@ -64,7 +64,7 @@ export class User {
     default: undefined,
     trim: true,
   })
-  lastName!: string | undefined;
+  lastName!: string;
 
   @Prop({
     type: String,
@@ -77,7 +77,14 @@ export class User {
     sparse: true,
     default: undefined,
   })
-  phoneNumber!: string | undefined;
+  phoneNumber!: string;
+
+  @Prop({
+    type: Number,
+    enum: Role,
+    default: Role.DEFAULT_USER,
+  })
+  role!: Role;
 
   @Prop({
     type: {
@@ -88,7 +95,7 @@ export class User {
     required: false,
     default: undefined,
   })
-  profilePicture!: CloudinaryObject | undefined;
+  profilePicture?: CloudinaryObject;
 }
 export const UserSchema = SchemaFactory.createForClass(User);
 

@@ -1,28 +1,23 @@
-import {
-  Injectable,
-  HttpException,
-  HttpStatus,
-  CACHE_MANAGER,
-  Inject,
-} from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
-import { Types } from 'mongoose';
-import * as bcrypt from 'bcrypt';
-import { ReturnMessage } from 'src/shared/interfaces/api/return-message.interface';
-import { AdminsService } from '../system-users/admins/admins.service';
-import { LoginAdminDto } from './dto/login-admin.dto';
-import { CreateUserDto } from '../system-users/users/dto/create-user.dto';
+import { AdminsService } from '@modules/system-users/admins/admins.service';
+import { CreateAdminDto } from '@modules/system-users/admins/dto/create-admin.dto';
+import { CreateUserDto } from '@modules/system-users/users/dto/create-user.dto';
+import { UsersService } from '@modules/system-users/users/users.service';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { checkObjectNullability } from 'src/shared/util/check-nullability.util';
-import { CreateAdminDto } from '../system-users/admins/dto/create-admin.dto';
-import { UsersService } from '../system-users/users/users.service';
-import { User } from '../system-users/users/interfaces/user.interface';
+import { JwtService } from '@nestjs/jwt';
+import { CacheService } from '@services/cache/cache.service';
+import { UserType } from '@services/logger/logger.interface';
+import { ServerAccessLogger } from '@services/logger/server-access.logger';
+import { Role } from '@shared/enums/role.enum';
+import { ReturnMessage } from '@shared/interfaces/general/return-message.interface';
+import { checkObjectNullability } from '@shared/util/check-nullability.util';
+import { Types } from 'mongoose';
+import { LoginAdminDto } from './dto/login-admin.dto';
 import { LoginUserDto } from './dto/login-user.dto';
-import { ServerAccessLogger } from 'src/services/logger/server-access.logger';
-import { Role } from 'src/shared/enums/role.enum';
-import { UserType } from 'src/services/logger/logger.interface';
-import { Admin } from '../system-users/admins/interfaces/admin.interface';
-import { Cache } from 'cache-manager';
+import * as bcrypt from 'bcrypt';
+import { User } from '@modules/system-users/users/interfaces/user.interface';
+import { roleFinder } from '@shared/util/role-finder.util';
+import { Admin } from '@modules/system-users/admins/interfaces/admin.interface';
 
 @Injectable()
 export class AuthService {
@@ -33,7 +28,7 @@ export class AuthService {
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
     private readonly serverAccessLogger: ServerAccessLogger,
-    @Inject(CACHE_MANAGER) private readonly redis: Cache,
+    private readonly cacheService: CacheService,
   ) {}
 
   async registerAdmin(createAdminDto: CreateAdminDto): Promise<ReturnMessage> {
@@ -47,20 +42,26 @@ export class AuthService {
   }
 
   async loginUser(loginUserDto: LoginUserDto): Promise<{
-    accessToken: string | null | undefined;
+    accessToken: string;
   }> {
-    const { password, username, email } = loginUserDto;
-    const user = await this.validateUser(username, email, password);
-    const userD = user._id.toString();
-    const tokens = await this.generateTokens(userD);
+    const { password, credentials } = loginUserDto;
+    const user = await this.validateUser(credentials, password);
+    const userID = user._id.toString();
+    const tokens = await this.generateTokens(userID, user.role);
 
-    await this.redis.set(
-      userD,
+    await this.cacheService.hset(
+      userID,
+      'accessToken',
       tokens?.accessToken,
-      this.configService.get<number>('REDIS_EXPIRY_FOR_TOKEN') as number,
+      this.configService.get<number>('REDIS_EXPIRY_FOR_TOKEN')! * 1000,
     );
 
-    this.serverAccessLogger.accessLog(email, 'DEFAULT', userD, 'LOGGED IN');
+    this.serverAccessLogger.accessLog(
+      credentials,
+      'DEFAULT',
+      userID,
+      'LOGGED IN',
+    );
 
     return {
       accessToken: tokens.accessToken,
@@ -68,7 +69,7 @@ export class AuthService {
   }
 
   async loginAdmin(loginAdminDto: LoginAdminDto): Promise<{
-    accessToken: string | null | undefined;
+    accessToken: string;
   }> {
     const { email, password } = loginAdminDto;
 
@@ -76,12 +77,13 @@ export class AuthService {
 
     const adminID = admin._id.toString();
 
-    const tokens = await this.generateTokens(adminID);
+    const tokens = await this.generateTokens(adminID, Role.ADMIN);
 
-    await this.redis.set(
+    await this.cacheService.hset(
       adminID,
+      'accessToken',
       tokens?.accessToken,
-      this.configService.get<number>('REDIS_EXPIRY_FOR_TOKEN') as number,
+      this.configService.get<number>('REDIS_EXPIRY_FOR_TOKEN')! * 1000,
     );
 
     this.serverAccessLogger.accessLog(email, 'ADMIN', adminID, 'LOGGED IN');
@@ -94,7 +96,7 @@ export class AuthService {
   async logoutAdmin(adminID: Types.ObjectId) {
     const admin = await this.adminsService.findByID(adminID);
 
-    await this.redis.del(adminID.toString());
+    await this.cacheService.del(adminID.toString() + 'accessToken');
 
     this.serverAccessLogger.accessLog(
       admin?.email as string,
@@ -106,9 +108,9 @@ export class AuthService {
 
   async logoutUser(userD: Types.ObjectId) {
     const user = await this.usersService.findByID(userD);
-    let userType: UserType = 'DEFAULT';
+    let userType: UserType = roleFinder(user.role);
 
-    await this.redis.del(userD.toString());
+    await this.cacheService.del(userD.toString() + 'accessToken');
     this.serverAccessLogger.accessLog(
       user?.email,
       userType,
@@ -119,7 +121,7 @@ export class AuthService {
 
   async validateAdmin(email: string, password: string): Promise<Admin> {
     const admin: Admin = await this.adminsService.findOneByEmail(email);
-    if (checkObjectNullability(admin))
+    if (!checkObjectNullability(admin))
       throw new HttpException(
         'auth.errors.wrongEmailOrPassword',
         HttpStatus.BAD_REQUEST,
@@ -135,14 +137,9 @@ export class AuthService {
     );
   }
 
-  async validateUser(
-    username: string,
-    email: string,
-    password: string,
-  ): Promise<User> {
+  async validateUser(credentials: string, password: string): Promise<User> {
     const user: User = await this.usersService.findOneByCredentials(
-      username,
-      email,
+      credentials,
     );
     if (!checkObjectNullability(user))
       throw new HttpException('auth.errors.wrongCred', HttpStatus.BAD_REQUEST);

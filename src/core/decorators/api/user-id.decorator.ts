@@ -5,8 +5,8 @@ import {
   HttpStatus,
 } from '@nestjs/common';
 import mongoose from 'mongoose';
-import { Request } from 'src/shared/interfaces/api/request.interface';
-import { checkNullability } from 'src/shared/util/check-nullability.util';
+import { Request } from '@shared/interfaces/general/request.interface';
+import { checkNullability } from '@shared/util/check-nullability.util';
 
 export const UserID = createParamDecorator(
   (_: unknown, ctx: ExecutionContext) => {

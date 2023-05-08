@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
+import { emptyDocument } from '@shared/error-handling/empty-document.helper';
 import { Model, Types } from 'mongoose';
-import { emptyDocument } from 'src/shared/error-handling/empty-document.helper';
 import { CreateBaseMapDto } from './dto/create-base-map.dto';
 import { CreateFeatureCollectionDto } from './dto/create-feature-collection.dto';
 import { CreateFeatureDto } from './dto/create-feature.dto';

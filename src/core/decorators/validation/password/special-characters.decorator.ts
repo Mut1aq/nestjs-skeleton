@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { specialCharacters } from '@shared/constants/validation/validation-constants';
 import {
   ValidatorConstraint,
   ValidatorConstraintInterface,
@@ -6,7 +7,6 @@ import {
   ValidationOptions,
   registerDecorator,
 } from 'class-validator';
-import { specialCharacters } from 'src/shared/constants/validation/validation-constants';
 
 @ValidatorConstraint({ name: 'PasswordContainsSpecialCharacterConstraint' })
 @Injectable()

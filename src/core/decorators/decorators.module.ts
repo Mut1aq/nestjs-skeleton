@@ -1,9 +1,6 @@
+import { userMongooseFeature } from '@modules/system-users/users/entities/user.entity';
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import {
-  User,
-  UserSchema,
-} from 'src/modules/system-users/users/entities/user.entity';
 import { PasswordContainsLowercaseLetterConstraint } from './validation/password/lowercase-letters.decorator';
 import { PasswordContainsNumbersConstraint } from './validation/password/numbers.decorator';
 import { PasswordContainsSpecialCharacterConstraint } from './validation/password/special-characters.decorator';
@@ -21,9 +18,7 @@ import { UsernameConstraint } from './validation/username.decorator';
     PasswordContainsSpecialCharacterConstraint,
     UsernameConstraint,
   ],
-  imports: [
-    MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
-  ],
+  imports: [MongooseModule.forFeature([userMongooseFeature])],
   exports: [],
 })
 export class DecoratorsModule {}

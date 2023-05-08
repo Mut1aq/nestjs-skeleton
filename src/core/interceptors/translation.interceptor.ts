@@ -6,9 +6,9 @@ import {
 } from '@nestjs/common';
 import { I18nService } from 'nestjs-i18n';
 import { map, Observable } from 'rxjs';
-import { ServerAPILogger } from 'src/services/logger/server-api.logger';
-import { ReturnMessage } from 'src/shared/interfaces/api/return-message.interface';
-import { checkNullability } from 'src/shared/util/check-nullability.util';
+import { ReturnMessage } from '@shared/interfaces/general/return-message.interface';
+import { checkNullability } from '@shared/util/check-nullability.util';
+import { ServerAPILogger } from '../services/logger/server-api.logger';
 
 @Injectable()
 export class TranslationInterceptor implements NestInterceptor {

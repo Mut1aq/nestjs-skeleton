@@ -9,7 +9,7 @@
     "target": "es2022",
     "sourceMap": true,
     "outDir": "./dist",
-    "baseUrl": "./",
+    "baseUrl": "src",
     "incremental": true,
     "skipLibCheck": true,
     "strictNullChecks": true,
@@ -28,7 +28,19 @@
     "noFallthroughCasesInSwitch": true,
     "noImplicitReturns": true,
     "strict": true,
-    "noUnusedLocals": true
+    "noUnusedLocals": true,
+    "paths": {
+      "@guards/*": ["./core/guards/*"],
+      "@filters/*": ["./core/filters/*"],
+      "@interceptors/*": ["./core/interceptors/*"],
+      "@middlewares/*": ["./core/middlewares/*"],
+      "@pipes/*": ["./core/pipes/*"],
+      "@services/*": ["./core/services/*"],
+      "@decorators/*": ["./core/decorators/*"],
+      "@modules/*": ["./modules/*"],
+      "@events/*": ["./modules/events/*"],
+      "@shared/*": ["./shared/*"]
+    }
   },
   "include": ["test/**/*", "src/**/*"],
   "exclude": ["node_modules", "dist"],

@@ -1,6 +1,6 @@
+import { FilterQueryDto } from '@shared/dtos/filter-query.dto';
 import { IsOptional, IsString } from 'class-validator';
 import { i18nValidationMessage } from 'nestjs-i18n';
-import { FilterQueryDto } from 'src/shared/dtos/filter-query.dto';
 
 export class FilterUsersDto extends FilterQueryDto {
   @IsOptional()
