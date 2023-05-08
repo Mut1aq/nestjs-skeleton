@@ -1,6 +1,6 @@
 import { Body, Controller, Param, Post, Get } from '@nestjs/common';
+import { MongoDBIDPipe } from '@pipes/mongo-id.pipe';
 import { Types } from 'mongoose';
-import { MongoDBIDPipe } from 'src/core/pipes/mongo-id.pipe';
 import { CreateBaseMapDto } from './dto/create-base-map.dto';
 import { CreateFeatureCollectionDto } from './dto/create-feature-collection.dto';
 import { CreateFeatureDto } from './dto/create-feature.dto';

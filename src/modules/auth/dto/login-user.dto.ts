@@ -1,25 +1,17 @@
+import { PasswordContainsLowercaseLetter } from '@decorators/validation/password/lowercase-letters.decorator';
+import { PasswordContainsNumbers } from '@decorators/validation/password/numbers.decorator';
+import { PasswordContainsSpecialCharacter } from '@decorators/validation/password/special-characters.decorator';
+import { PasswordContainsUppercaseLetter } from '@decorators/validation/password/uppercase-letters.decorator';
 import { ApiProperty } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
-import {
-  IsNotEmpty,
-  IsEmail,
-  MinLength,
-  IsString,
-  MaxLength,
-  IsOptional,
-} from 'class-validator';
+import { IsNotEmpty, MinLength, IsString, MaxLength } from 'class-validator';
 import { i18nValidationMessage } from 'nestjs-i18n';
-import { PasswordContainsLowercaseLetter } from 'src/core/decorators/validation/password/lowercase-letters.decorator';
-import { PasswordContainsNumbers } from 'src/core/decorators/validation/password/numbers.decorator';
-import { PasswordContainsSpecialCharacter } from 'src/core/decorators/validation/password/special-characters.decorator';
-import { PasswordContainsUppercaseLetter } from 'src/core/decorators/validation/password/uppercase-letters.decorator';
-import { Username } from 'src/core/decorators/validation/username.decorator';
 
 export class LoginUserDto {
   @ApiProperty({
-    description: "User's Email when registering",
-    example: 'mutlaqalsadeed@gmail.com',
-    name: 'email',
+    description: "User's credentials when registering",
+    example: 'mutlaqalsadeed@gmail.com or 0795367929 or mut1aq',
+    name: 'credentials',
     required: true,
     uniqueItems: true,
     type: 'string',
@@ -27,62 +19,22 @@ export class LoginUserDto {
   @Transform((param) => param?.value?.toLowerCase()?.trim())
   @MinLength(5, {
     message: i18nValidationMessage('validation.minLength', {
-      property: 'Email',
+      property: 'credentials',
       characters: 5,
     }),
   })
-  @MaxLength(320, {
-    message: i18nValidationMessage('validation.maxLength', {
-      property: 'Email',
-      characters: 320,
-    }),
-  })
-  @IsEmail(undefined, {
-    message: i18nValidationMessage('validation.email'),
-  })
-  @IsNotEmpty({
-    message: i18nValidationMessage('validation.isNotEmpty', {
-      property: 'Email',
-    }),
-  })
-  @IsOptional()
-  readonly email!: string;
-
-  //*******************************************/
-
-  @ApiProperty({
-    description: "Anime Fan's username",
-    type: 'string',
-    required: false,
-    example: 'mut1aq',
-    name: 'username',
-  })
-  @Transform((param) => param.value.toLowerCase().trim())
-  @Username()
   @MinLength(3, {
     message: i18nValidationMessage('validation.minLength', {
-      property: 'Username',
+      property: 'credentials',
       characters: 3,
     }),
   })
-  @MaxLength(30, {
-    message: i18nValidationMessage('validation.maxLength', {
-      property: 'Username',
-      characters: 30,
-    }),
-  })
-  @IsString({
-    message: i18nValidationMessage('validation.isString', {
-      property: 'Username',
-    }),
-  })
   @IsNotEmpty({
     message: i18nValidationMessage('validation.isNotEmpty', {
-      property: 'Username',
+      property: 'credentials',
     }),
   })
-  @IsOptional()
-  username!: string;
+  readonly credentials!: string;
 
   //*******************************************/
 

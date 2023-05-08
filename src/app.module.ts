@@ -1,28 +1,22 @@
-import { BullModule } from '@nestjs/bull';
 import {
   Module,
   NestModule,
   MiddlewareConsumer,
   RequestMethod,
-  CacheModule,
 } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
-import { PassportModule } from '@nestjs/passport';
 import { ScheduleModule } from '@nestjs/schedule';
 import { ThrottlerModule } from '@nestjs/throttler';
 import helmet from 'helmet';
 import { I18nModule } from 'nestjs-i18n';
-import { EventsModule } from './modules/events/events.module';
 import { ModulesModule } from './modules/modules.module';
-import { ServicesModule } from './services/services.module';
 import {
   ConfigOptions,
   ThrottlerOptions,
   I18nModuleOptions,
-  BullOptions,
-  MongooseOptions,
-  RedisOptions,
+  MongooseConfig,
+  JwtConfig,
 } from './shared/configs/app-options';
 import { DecoratorsModule } from './core/decorators/decorators.module';
 import { DevtoolsModule } from '@nestjs/devtools-integration';
@@ -33,24 +27,25 @@ import {
   GlobalServices,
 } from './shared/configs/app-configs';
 import { RealIPMiddleware } from './core/middlewares/ip.middleware';
+import { ServicesModule } from './core/services/services.module';
+import { JwtModule } from '@nestjs/jwt';
+import { CacheModule } from '@services/cache/cache.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot(ConfigOptions),
-    MongooseModule.forRootAsync(MongooseOptions),
+    MongooseModule.forRootAsync(MongooseConfig),
     ThrottlerModule.forRoot(ThrottlerOptions),
     I18nModule.forRoot(I18nModuleOptions),
-    CacheModule.registerAsync<any>(RedisOptions),
-    BullModule.forRootAsync(BullOptions),
+    CacheModule,
     ScheduleModule.forRoot(),
     DevtoolsModule.register({
       http: process.env.NODE_ENV !== 'production',
     }),
     ServicesModule,
     DecoratorsModule,
-    PassportModule,
-    EventsModule,
     ModulesModule,
+    JwtModule.registerAsync(JwtConfig),
   ],
   controllers: [],
   providers: [

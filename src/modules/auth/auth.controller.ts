@@ -1,28 +1,28 @@
+import { Public } from '@decorators/auth/public.decorator';
+import { AccessTokenGuard } from '@guards/access-token.guard';
+import { CreateAdminDto } from '@modules/system-users/admins/dto/create-admin.dto';
+import { CreateUserDto } from '@modules/system-users/users/dto/create-user.dto';
 import {
   Controller,
   Post,
   Body,
-  UseGuards,
-  Req,
-  Get,
   HttpException,
   HttpStatus,
+  UseGuards,
+  Get,
+  Req,
 } from '@nestjs/common';
 import {
-  ApiBadRequestResponse,
-  ApiCreatedResponse,
-  ApiOkResponse,
   ApiTags,
+  ApiCreatedResponse,
+  ApiBadRequestResponse,
+  ApiOkResponse,
 } from '@nestjs/swagger';
-import { Public } from 'src/core/decorators/auth/public.decorator';
-import { CreateUserDto } from '../system-users/users/dto/create-user.dto';
+import { checkNullability } from '@shared/util/check-nullability.util';
 import { AuthService } from './auth.service';
 import { LoginAdminDto } from './dto/login-admin.dto';
-import { Request } from 'src/shared/interfaces/api/request.interface';
-import { AccessTokenGuard } from 'src/core/guards/access-token.guard';
-import { CreateAdminDto } from '../system-users/admins/dto/create-admin.dto';
-import { checkNullability } from 'src/shared/util/check-nullability.util';
 import { LoginUserDto } from './dto/login-user.dto';
+import { Request } from '@shared/interfaces/general/request.interface';
 
 @ApiTags('auth')
 @Controller('auth')

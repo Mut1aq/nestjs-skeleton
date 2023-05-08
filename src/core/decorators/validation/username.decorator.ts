@@ -1,18 +1,18 @@
 import { Injectable } from '@nestjs/common';
 import {
+  lowercaseLetters,
+  uppercaseLetters,
+  numbers,
+  stringNumbers,
+} from '@shared/constants/validation/validation-constants';
+import { checkNullability } from '@shared/util/check-nullability.util';
+import {
   ValidatorConstraint,
   ValidatorConstraintInterface,
   ValidationArguments,
   ValidationOptions,
   registerDecorator,
 } from 'class-validator';
-import {
-  lowercaseLetters,
-  numbers,
-  stringNumbers,
-  uppercaseLetters,
-} from 'src/shared/constants/validation/validation-constants';
-import { checkNullability } from 'src/shared/util/check-nullability.util';
 
 @ValidatorConstraint({ name: 'Username' })
 @Injectable()

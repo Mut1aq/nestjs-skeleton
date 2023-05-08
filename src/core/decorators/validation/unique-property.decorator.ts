@@ -1,3 +1,4 @@
+import { UserDocument } from '@modules/system-users/users/entities/user.entity';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import {
@@ -8,10 +9,6 @@ import {
   ValidatorConstraintInterface,
 } from 'class-validator';
 import { Model } from 'mongoose';
-import {
-  User,
-  UserDocument,
-} from 'src/modules/system-users/users/entities/user.entity';
 
 @ValidatorConstraint({ name: 'UniqueUserProperty', async: true })
 @Injectable()
@@ -19,7 +16,7 @@ export class UniqueUserPropertyConstraint
   implements ValidatorConstraintInterface
 {
   constructor(
-    @InjectModel(User.name)
+    @InjectModel('User')
     private readonly userModel: Model<UserDocument>,
   ) {}
 

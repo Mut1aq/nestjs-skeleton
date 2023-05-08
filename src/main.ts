@@ -9,13 +9,13 @@ import {
   i18nValidationErrorFactory,
 } from 'nestjs-i18n';
 import { AppModule } from './app.module';
-import { ServerAPILogger } from './services/logger/server-api.logger';
 import { SwaggerOptions } from './shared/configs/app-options';
 import * as compression from 'compression';
 import * as mongoSanitize from 'express-mongo-sanitize';
 import * as bodyParser from 'body-parser';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { SwaggerConfig } from './shared/configs/app-options';
+import { ServerAPILogger } from './core/services/logger/server-api.logger';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
@@ -59,6 +59,10 @@ async function bootstrap() {
       whitelist: true,
       transform: true,
       forbidUnknownValues: false,
+      forbidNonWhitelisted: true,
+      transformOptions: {
+        enableImplicitConversion: true,
+      },
     }),
   );
 

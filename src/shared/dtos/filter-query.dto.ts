@@ -1,5 +1,4 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Type } from 'class-transformer';
 import {
   IsIn,
   IsInt,
@@ -15,26 +14,32 @@ export class FilterQueryDto {
     description: 'How many documents you want to skip over',
     name: 'skip',
     isArray: false,
-
     required: false,
     type: Number,
     minimum: 0,
+  })
+  @IsInt({
+    message: i18nValidationMessage('validation.isInt', {
+      property: 'Skip',
+    }),
+  })
+  @Min(0, {
+    message: i18nValidationMessage('validation.min', {
+      property: 'Skip',
+      min: 0,
+    }),
   })
   @IsNotEmpty({
     message: i18nValidationMessage('validation.isNotEmpty', {
       property: 'Skip',
     }),
   })
-  @Type(() => Number)
-  @IsInt()
-  @Min(0)
   skip!: number;
 
   @ApiProperty({
     description: 'To how many documents you want to limit the response',
     name: 'limit',
     isArray: false,
-
     required: false,
     type: Number,
     minimum: 0,
@@ -44,21 +49,33 @@ export class FilterQueryDto {
       property: 'Limit',
     }),
   })
-  @Type(() => Number)
   @IsInt()
-  @Min(0)
+  @Min(0, {
+    message: i18nValidationMessage('validation.min', {
+      property: 'Limit',
+      min: 0,
+    }),
+  })
   limit!: number;
 
   @ApiProperty({
     description: 'Order by date, for filtering, can be either "asc", "desc"',
     name: 'orderByDate',
     isArray: false,
-
     required: false,
     type: String,
   })
-  @IsOptional()
-  @IsString()
+  @IsString({
+    message: i18nValidationMessage('validation.isString', {
+      property: 'Order By Date',
+    }),
+  })
   @IsIn(['asc', 'desc'])
-  orderByDate?: string | undefined;
+  @IsNotEmpty({
+    message: i18nValidationMessage('validation.isNotEmpty', {
+      property: 'Order By Date',
+    }),
+  })
+  @IsOptional()
+  orderByDate?: string;
 }
