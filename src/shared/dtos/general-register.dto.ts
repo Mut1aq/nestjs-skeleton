@@ -1,9 +1,9 @@
-import { Match } from '@decorators/validation/match.decorator';
+import { Match } from '@decorators/validation/general/match.decorator';
 import { PasswordContainsLowercaseLetter } from '@decorators/validation/password/lowercase-letters.decorator';
 import { PasswordContainsNumbers } from '@decorators/validation/password/numbers.decorator';
 import { PasswordContainsSpecialCharacter } from '@decorators/validation/password/special-characters.decorator';
 import { PasswordContainsUppercaseLetter } from '@decorators/validation/password/uppercase-letters.decorator';
-import { UniqueUserProperty } from '@decorators/validation/unique-property.decorator';
+import { UniqueUserProperty } from '@decorators/validation/general/unique-property.decorator';
 import { ApiProperty } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
 import {

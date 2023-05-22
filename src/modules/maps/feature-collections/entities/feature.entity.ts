@@ -1,7 +1,10 @@
+import {
+  FeatureCollection,
+  Geometry,
+  Properties,
+} from '@modules/maps/interfaces/feature-collection.interface';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Types } from 'mongoose';
-import { Geometry, Properties } from '../interfaces/geo-json.interface';
-import { FeatureCollection } from './feature-collection.entity';
 
 export type FeatureDocument = HydratedDocument<Feature>;
 
@@ -12,7 +15,6 @@ export type FeatureDocument = HydratedDocument<Feature>;
 export class Feature {
   //********************* Register Data **********************/
   @Prop({
-    required: true,
     trim: true,
     type: String,
   })

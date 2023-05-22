@@ -1,4 +1,7 @@
-import { MulterOptions } from '@nestjs/platform-express/multer/interfaces/multer-options.interface';
+import {
+  MulterField,
+  MulterOptions,
+} from '@nestjs/platform-express/multer/interfaces/multer-options.interface';
 
 export const numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 export const stringNumbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
@@ -7,6 +10,17 @@ export const specialCharacters = [
   '*',
   '/',
   '-',
+  ';',
+  '{',
+  '}',
+  '[',
+  ']',
+  '?',
+  '\\',
+  '+',
+  ':',
+  '`',
+  '~',
   '_',
   '=',
   '!',
@@ -22,6 +36,7 @@ export const specialCharacters = [
   '',
   '|',
   ',',
+  ' ',
 ];
 export const lowercaseLetters = [
   'a',
@@ -50,7 +65,6 @@ export const lowercaseLetters = [
   'x',
   'y',
   'z',
-  ' ',
 ];
 export const uppercaseLetters = [
   'A',
@@ -79,7 +93,6 @@ export const uppercaseLetters = [
   'X',
   'Y',
   'Z',
-  ' ',
 ];
 
 export const validImageFormats = ['jpeg', 'png', 'bmp'];
@@ -94,7 +107,7 @@ export const fileValidators: MulterOptions = {
   },
 };
 
-export const fileFields = [
+export const fileFields: MulterField[] = [
   { name: 'image', maxCount: 1 },
   { name: 'video', maxCount: 1 },
 ];

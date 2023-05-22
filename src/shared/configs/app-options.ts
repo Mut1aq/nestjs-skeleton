@@ -22,7 +22,7 @@ export const I18nModuleOptions: I18nOptions = {
     path: join(__dirname, '../../i18n/'),
     watch: true,
   },
-  typesOutputPath: join(__dirname, '../../../src/generated/i18n.generated.ts'),
+  typesOutputPath: join(process.cwd() + '/src/generated/i18n.generated.ts'),
   resolvers: [
     { use: QueryResolver, options: ['lang', 'locale', 'l'] },
     new HeaderResolver(['x-custom-lang']),

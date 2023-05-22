@@ -26,6 +26,8 @@ export class UsersService {
       +(this.configService.get<number>('SALT_ROUNDS') as number),
     );
     user.password = await bcrypt.hash(user.password, salt);
+
+    await user.save();
   }
 
   async findByID(userID: Types.ObjectId): Promise<User> {

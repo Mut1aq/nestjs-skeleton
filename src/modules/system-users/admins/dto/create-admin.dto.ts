@@ -1,4 +1,4 @@
-import { Match } from '@decorators/validation/match.decorator';
+import { Match } from '@decorators/validation/general/match.decorator';
 import { PasswordContainsLowercaseLetter } from '@decorators/validation/password/lowercase-letters.decorator';
 import { PasswordContainsNumbers } from '@decorators/validation/password/numbers.decorator';
 import { PasswordContainsSpecialCharacter } from '@decorators/validation/password/special-characters.decorator';

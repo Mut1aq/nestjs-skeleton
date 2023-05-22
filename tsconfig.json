@@ -45,6 +45,6 @@
   "include": ["test/**/*", "src/**/*"],
   "exclude": ["node_modules", "dist"],
   "watchOptions": {
-    "watchFile": "fixedPollingInterval"
+    "watchFile": "priorityPollingInterval"
   }
 }

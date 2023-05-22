@@ -1,5 +1,5 @@
-import { UniqueUserProperty } from '@decorators/validation/unique-property.decorator';
-import { Username } from '@decorators/validation/username.decorator';
+import { UniqueUserProperty } from '@decorators/validation/general/unique-property.decorator';
+import { Username } from '@decorators/validation/general/username.decorator';
 import { ApiProperty } from '@nestjs/swagger';
 import { GeneralRegisterDto } from '@shared/dtos/general-register.dto';
 import { thirteenYearsAgo } from '@shared/util/date.util';

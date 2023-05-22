@@ -5,8 +5,8 @@ import { PasswordContainsLowercaseLetterConstraint } from './validation/password
 import { PasswordContainsNumbersConstraint } from './validation/password/numbers.decorator';
 import { PasswordContainsSpecialCharacterConstraint } from './validation/password/special-characters.decorator';
 import { PasswordContainsUppercaseLetterConstraint } from './validation/password/uppercase-letters.decorator';
-import { UniqueUserPropertyConstraint } from './validation/unique-property.decorator';
-import { UsernameConstraint } from './validation/username.decorator';
+import { UniqueUserPropertyConstraint } from './validation/general/unique-property.decorator';
+import { UsernameConstraint } from './validation/general/username.decorator';
 
 @Module({
   controllers: [],
