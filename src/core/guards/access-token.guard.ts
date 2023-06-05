@@ -7,14 +7,14 @@ import {
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { JwtService } from '@nestjs/jwt';
+import { IS_PUBLIC_KEY } from '@decorators/auth/public.decorator';
 import {
   checkNullability,
   checkObjectNullability,
 } from '@shared/util/check-nullability.util';
-import { Request } from '@shared/interfaces/general/request.interface';
+import { TokenPayload } from '@shared/interfaces/api/token-payload.interface';
+import { Request } from '@shared/interfaces/api/request.interface';
 import { CacheService } from '../services/cache/cache.service';
-import { IS_PUBLIC_KEY } from '@decorators/auth/public.decorator';
-import { TokenPayload } from '@shared/interfaces/general/token-payload.interface';
 
 @Injectable()
 export class AccessTokenGuard implements CanActivate {

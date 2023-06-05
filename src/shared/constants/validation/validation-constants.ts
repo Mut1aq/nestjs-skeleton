@@ -1,7 +1,4 @@
-import {
-  MulterField,
-  MulterOptions,
-} from '@nestjs/platform-express/multer/interfaces/multer-options.interface';
+import { MulterOptions } from '@nestjs/platform-express/multer/interfaces/multer-options.interface';
 
 export const numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 export const stringNumbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
@@ -95,19 +92,41 @@ export const uppercaseLetters = [
   'Z',
 ];
 
-export const validImageFormats = ['jpeg', 'png', 'bmp'];
+export const validImageFormats = ['jpeg', 'png', 'bmp', 'jpg'];
 
 export const validVideoFormats = ['mp4', 'mov'];
 
-export const fileValidators: MulterOptions = {
+export const postFileValidators: MulterOptions = {
   limits: {
-    files: 2,
+    files: 1,
     fields: 2,
     fileSize: 2786000000,
   },
 };
 
-export const fileFields: MulterField[] = [
+export const postFileFields = [
   { name: 'image', maxCount: 1 },
   { name: 'video', maxCount: 1 },
+];
+
+export const reelsApplicationFileFields = [
+  { name: 'frontIdentity', maxCount: 1 },
+  { name: 'backIdentity', maxCount: 1 },
+  { name: 'sample', maxCount: 1 },
+];
+
+export const reelsApplicationFileValidators: MulterOptions = {
+  limits: {
+    files: 3,
+    fields: 5,
+    fileSize: 2786000000,
+  },
+};
+
+export const nonTranslatableErrors = [
+  'Cannot POST',
+  'Cannot GET',
+  'Cannot PUT',
+  'Cannot PATCH',
+  'Cannot DELETE',
 ];

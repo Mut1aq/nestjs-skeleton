@@ -1,7 +1,7 @@
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { Inject, Injectable } from '@nestjs/common';
-import { checkNullability } from '@shared/util/check-nullability.util';
 import { Cache } from 'cache-manager';
+import { checkNullability } from '@shared/util/check-nullability.util';
 
 @Injectable()
 export class CacheService {
@@ -24,12 +24,15 @@ export class CacheService {
     return this.cache.get<string>(key);
   }
 
-  async hget(objectName: string) {
+  async hget(objectName: string): Promise<Object | undefined> {
     const stringObject = await this.cache.get<string>(objectName);
     return JSON.parse(stringObject! ?? {});
   }
 
-  async hgetByKey(objectName: string, key: 'accessToken' | 'socketID') {
+  async hgetByKey(
+    objectName: string,
+    key: 'accessToken' | 'socketID',
+  ): Promise<string | undefined> {
     const stringObject = await this.cache.get<string>(objectName);
     const object = JSON.parse(stringObject! ?? {});
     return object[key];

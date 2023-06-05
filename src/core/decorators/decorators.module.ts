@@ -1,12 +1,15 @@
-import { userMongooseFeature } from '@modules/system-users/users/entities/user.entity';
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { PasswordContainsLowercaseLetterConstraint } from './validation/password/lowercase-letters.decorator';
-import { PasswordContainsNumbersConstraint } from './validation/password/numbers.decorator';
-import { PasswordContainsSpecialCharacterConstraint } from './validation/password/special-characters.decorator';
-import { PasswordContainsUppercaseLetterConstraint } from './validation/password/uppercase-letters.decorator';
-import { UniqueUserPropertyConstraint } from './validation/general/unique-property.decorator';
-import { UsernameConstraint } from './validation/general/username.decorator';
+import {
+  User,
+  UserSchema,
+} from '@modules/system-users/users/entities/user.entity';
+import { PasswordContainsLowercaseLetterConstraint } from './password/lowercase-letters.decorator';
+import { PasswordContainsNumbersConstraint } from './password/numbers.decorator';
+import { PasswordContainsSpecialCharacterConstraint } from './password/special-characters.decorator';
+import { PasswordContainsUppercaseLetterConstraint } from './password/uppercase-letters.decorator';
+import { UniqueUserPropertyConstraint } from './validation/unique-property.decorator';
+import { UsernameConstraint } from './validation/username.decorator';
 
 @Module({
   controllers: [],
@@ -18,7 +21,9 @@ import { UsernameConstraint } from './validation/general/username.decorator';
     PasswordContainsSpecialCharacterConstraint,
     UsernameConstraint,
   ],
-  imports: [MongooseModule.forFeature([userMongooseFeature])],
+  imports: [
+    MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
+  ],
   exports: [],
 })
 export class DecoratorsModule {}

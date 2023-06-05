@@ -21,20 +21,6 @@ export type I18nTranslations = {
             "register": string;
         };
     };
-    "entities": {
-        "success": {
-            "create": string;
-            "update": string;
-            "delete": string;
-        };
-        "errors": {
-            "create": string;
-            "update": string;
-            "delete": string;
-            "readAll": string;
-            "readOne": string;
-        };
-    };
     "post": {
         "errors": {
             "view": string;
@@ -47,21 +33,26 @@ export type I18nTranslations = {
         };
     };
     "shared": {
-        "errors": {
-            "error": string;
-            "user": string;
-            "post": string;
-            "comment": string;
-            "admin": string;
-        };
-        "success": {
-            "success": string;
-        };
         "entities": {
             "user": string;
             "admin": string;
             "post": string;
             "comment": string;
+            "ad": string;
+            "room": string;
+            "message": string;
+        };
+        "success": {
+            "create": string;
+            "update": string;
+            "delete": string;
+        };
+        "errors": {
+            "create": string;
+            "update": string;
+            "delete": string;
+            "readAll": string;
+            "readOne": string;
         };
     };
     "user": {

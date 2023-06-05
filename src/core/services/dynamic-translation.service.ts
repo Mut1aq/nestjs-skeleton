@@ -1,14 +1,14 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { PathImpl2 } from '@nestjs/config';
+import { I18nService } from 'nestjs-i18n';
 import { checkNullability } from '@shared/util/check-nullability.util';
 import { I18nTranslations } from 'generated/i18n.generated';
-import { I18nService } from 'nestjs-i18n';
 
 @Injectable()
 export class DynamicTranslationService {
   constructor(private readonly i18n: I18nService<I18nTranslations>) {}
 
-  async HTTPErrorWithOneArg(
+  async HTTPErrorTranslationWithTwoArgs(
     error: any,
     firstTranslation: PathImpl2<I18nTranslations>,
     secondTranslation: PathImpl2<I18nTranslations>,
@@ -28,7 +28,7 @@ export class DynamicTranslationService {
     );
   }
 
-  async HTTPErrorWithNoArgs(
+  async HTTPTranslationWithOneArg(
     error: any,
     firstTranslation: PathImpl2<I18nTranslations>,
   ): Promise<void> {

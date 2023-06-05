@@ -1,7 +1,6 @@
 import { AdminsService } from '@modules/system-users/admins/admins.service';
 import { CreateAdminDto } from '@modules/system-users/admins/dto/create-admin.dto';
 import { CreateUserDto } from '@modules/system-users/users/dto/create-user.dto';
-import { UsersService } from '@modules/system-users/users/users.service';
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
@@ -9,7 +8,6 @@ import { CacheService } from '@services/cache/cache.service';
 import { UserType } from '@services/logger/logger.interface';
 import { ServerAccessLogger } from '@services/logger/server-access.logger';
 import { Role } from '@shared/enums/role.enum';
-import { ReturnMessage } from '@shared/interfaces/general/return-message.interface';
 import { checkObjectNullability } from '@shared/util/check-nullability.util';
 import { Types } from 'mongoose';
 import { LoginAdminDto } from './dto/login-admin.dto';
@@ -18,13 +16,15 @@ import * as bcrypt from 'bcrypt';
 import { User } from '@modules/system-users/users/interfaces/user.interface';
 import { roleFinder } from '@shared/util/role-finder.util';
 import { Admin } from '@modules/system-users/admins/interfaces/admin.interface';
+import { ReturnMessage } from '@shared/interfaces/api/return-message.interface';
+import { UsersHelperService } from '@modules/system-users/users/services/users-helper.service';
 
 @Injectable()
 export class AuthService {
   constructor(
     // * Services
     private readonly adminsService: AdminsService,
-    private readonly usersService: UsersService,
+    private readonly usersHelperService: UsersHelperService,
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
     private readonly serverAccessLogger: ServerAccessLogger,
@@ -37,7 +37,7 @@ export class AuthService {
   }
 
   async registerUser(createUserDto: CreateUserDto): Promise<ReturnMessage> {
-    await this.usersService.create(createUserDto);
+    await this.usersHelperService.create(createUserDto);
     return { message: 'auth.success.register', statusCode: 201 };
   }
 
@@ -107,7 +107,7 @@ export class AuthService {
   }
 
   async logoutUser(userD: Types.ObjectId) {
-    const user = await this.usersService.findByID(userD);
+    const user = await this.usersHelperService.findByID(userD);
     let userType: UserType = roleFinder(user.role);
 
     await this.cacheService.del(userD.toString() + 'accessToken');
@@ -138,7 +138,7 @@ export class AuthService {
   }
 
   async validateUser(credentials: string, password: string): Promise<User> {
-    const user: User = await this.usersService.findOneByCredentials(
+    const user: User = await this.usersHelperService.findOneByCredentials(
       credentials,
     );
     if (!checkObjectNullability(user))

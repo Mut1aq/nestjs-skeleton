@@ -6,9 +6,9 @@ import {
 } from '@nestjs/common';
 import { I18nService } from 'nestjs-i18n';
 import { map, Observable } from 'rxjs';
-import { ReturnMessage } from '@shared/interfaces/general/return-message.interface';
+import { ServerAPILogger } from '@services/logger/server-api.logger';
+import { ReturnMessage } from '@shared/interfaces/api/return-message.interface';
 import { checkNullability } from '@shared/util/check-nullability.util';
-import { ServerAPILogger } from '../services/logger/server-api.logger';
 
 @Injectable()
 export class TranslationInterceptor implements NestInterceptor {
@@ -21,11 +21,12 @@ export class TranslationInterceptor implements NestInterceptor {
     const request = context.switchToHttp().getRequest();
     const lang = request.headers['accept-language'];
     const response = context.switchToHttp().getResponse();
+
     this.serverAPILogger.APIlog(
       request.originalUrl,
       'TranslationInterceptor - Request',
       request,
-      '🚀', // ! Nice
+      '🚀',
     );
     return next.handle().pipe(
       map(async (returnMessage: ReturnMessage & { error: any }) => {
@@ -33,12 +34,14 @@ export class TranslationInterceptor implements NestInterceptor {
           returnMessage?.message?.toLowerCase().includes('successfully') ||
           (returnMessage?.message?.toLowerCase().includes('something') &&
             !checkNullability(returnMessage.error));
+
         this.serverAPILogger.APIlog(
           request.originalUrl,
           'TranslationInterceptor - Response',
           request,
           response.statusCode,
         );
+
         if (returnMessage && (returnMessage.message || returnMessage.error)) {
           let customMessage = '';
           try {
@@ -52,6 +55,7 @@ export class TranslationInterceptor implements NestInterceptor {
             }
           } catch (err) {
             customMessage = returnMessage.message ?? returnMessage.error;
+
             this.serverAPILogger.APIlog(
               request.originalUrl,
               'TranslationInterceptor',

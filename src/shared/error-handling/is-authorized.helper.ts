@@ -1,3 +1,4 @@
+import { User } from '@modules/system-users/users/interfaces/user.interface';
 import { UnauthorizedException } from '@nestjs/common';
 import { Types } from 'mongoose';
 import { Action } from '../enums/action.enum';
@@ -8,8 +9,8 @@ import { Action } from '../enums/action.enum';
  * @param currentUserID current user that is extracted from the request
  */
 export function isAuthor(
-  author: Types.ObjectId,
-  currentUserID: Types.ObjectId,
+  author: Types.ObjectId | User,
+  currentUserID: Types.ObjectId | User,
   action: Action,
 ) {
   if (author.toString() !== currentUserID.toString()) {

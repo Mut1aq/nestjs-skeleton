@@ -6,7 +6,7 @@ import { UserType } from './logger.interface';
 
 export class ServerAccessLogger implements LoggerService {
   logFile: WriteStream | null = null;
-  filePath = './logs/skeleton-access.log';
+  filePath = './logs/eve-access.log';
   constructor() {
     this._createOrPrepareActionFile();
   }

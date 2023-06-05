@@ -7,7 +7,7 @@ export class CustomThrottlerGuard extends ThrottlerGuard {
     throw new ThrottlerException('validation.throttlerError');
   }
 
-  protected getTracker(request: Record<string, any>): string {
-    return request.ips.length > 0 ? request.ips[0] : request.ip;
+  protected getTracker(req: Record<string, any>): string {
+    return req.ips.length ? req.ips[0] : req.ip; // individualize IP extraction to meet your own needs
   }
 }

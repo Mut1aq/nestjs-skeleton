@@ -1,7 +1,7 @@
-import { PasswordContainsLowercaseLetter } from '@decorators/validation/password/lowercase-letters.decorator';
-import { PasswordContainsNumbers } from '@decorators/validation/password/numbers.decorator';
-import { PasswordContainsSpecialCharacter } from '@decorators/validation/password/special-characters.decorator';
-import { PasswordContainsUppercaseLetter } from '@decorators/validation/password/uppercase-letters.decorator';
+import { PasswordContainsLowercaseLetter } from '@decorators/password/lowercase-letters.decorator';
+import { PasswordContainsNumbers } from '@decorators/password/numbers.decorator';
+import { PasswordContainsSpecialCharacter } from '@decorators/password/special-characters.decorator';
+import { PasswordContainsUppercaseLetter } from '@decorators/password/uppercase-letters.decorator';
 import { ApiProperty } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
 import {

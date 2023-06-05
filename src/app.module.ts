@@ -26,7 +26,7 @@ import {
   GlobalInterceptors,
   GlobalServices,
 } from './shared/configs/app-configs';
-import { RealIPMiddleware } from './core/middlewares/ip.middleware';
+import { RealIPMiddleware } from './core/middlewares/real-ip.middleware';
 import { ServicesModule } from './core/services/services.module';
 import { JwtModule } from '@nestjs/jwt';
 import { CacheModule } from '@services/cache/cache.module';

@@ -1,7 +1,7 @@
 import { LoggerService } from '@nestjs/common';
-import { ColorScheme } from '@shared/interfaces/general/color-scheme.interface';
 import { createWriteStream, existsSync, mkdirSync, WriteStream } from 'fs';
 import { format } from 'util';
+import { ColorScheme } from '@shared/interfaces/general/color-scheme.interface';
 import {
   APIColorScheme,
   DebugColorScheme,
@@ -10,11 +10,11 @@ import {
   VerboseColorScheme,
   WarnColorScheme,
 } from '../../../shared/constants/general/pallet';
-import { Request } from '@shared/interfaces/general/request.interface';
+import { Request } from '@shared/interfaces/api/request.interface';
 
 export class ServerAPILogger implements LoggerService {
   logFile: WriteStream | null = null;
-  filePath = './logs/skeleton-api.log';
+  filePath = './logs/eve-api.log';
   constructor() {
     if (!existsSync('./logs')) {
       mkdirSync('./logs');
@@ -25,15 +25,22 @@ export class ServerAPILogger implements LoggerService {
     if (!this.logFile)
       this.logFile = createWriteStream(this.filePath, { flags: 'a' }); // a for append/ w for write
   }
-  debug(message: any, context: string = 'DEBUG') {
+  debug(message: string, context: string = 'DEBUG') {
     this.basicLog(message, context, 'DEBUG', DebugColorScheme);
   }
-  error(message: any, context: string = 'ERROR') {
+  error(message: string, context: string = 'ERROR') {
     this.basicLog(message, context, 'ERROR', ErrorColorScheme);
   }
 
-  log(message: any, context: string = 'LOG') {
-    this.basicLog(message, context, 'LOG', LogColorScheme);
+  log(message: string, context: string = 'LOG') {
+    const uselessLogs = [
+      'RouterExplorer',
+      'I18nService',
+      'NestFactory',
+      'InstanceLoader',
+    ];
+    if (!uselessLogs.includes(context))
+      this.basicLog(message, context, 'LOG', LogColorScheme);
   }
 
   verbose(message: any, context = 'VERBOSE') {

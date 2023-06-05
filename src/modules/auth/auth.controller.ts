@@ -22,7 +22,7 @@ import { checkNullability } from '@shared/util/check-nullability.util';
 import { AuthService } from './auth.service';
 import { LoginAdminDto } from './dto/login-admin.dto';
 import { LoginUserDto } from './dto/login-user.dto';
-import { Request } from '@shared/interfaces/general/request.interface';
+import { Request } from '@shared/interfaces/api/request.interface';
 
 @ApiTags('auth')
 @Controller('auth')

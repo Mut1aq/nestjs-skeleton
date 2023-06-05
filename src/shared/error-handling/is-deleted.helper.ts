@@ -7,7 +7,7 @@ import { checkObjectNullability } from '../util/check-nullability.util';
  * @param name name of the collection for better error handling
  */
 export function isDeleted<T>(
-  document: (T & { isDeleted: boolean | string }) | null,
+  document: (T & { isDeleted?: boolean | string }) | null,
   name: string,
 ) {
   if (

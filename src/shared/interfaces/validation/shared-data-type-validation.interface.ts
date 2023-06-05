@@ -3,4 +3,5 @@ export interface SharedDataTypeValidation {
   isNotEmpty?: boolean;
   isOptional?: boolean;
   property: string;
+  name: string;
 }

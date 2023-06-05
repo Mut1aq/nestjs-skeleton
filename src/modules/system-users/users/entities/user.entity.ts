@@ -1,7 +1,8 @@
+import { Room } from '@modules/chat/rooms/interfaces/room.interface';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Role } from '@shared/enums/role.enum';
 import { CloudinaryObject } from '@shared/interfaces/general/cloudinary-object.interface';
-import { HydratedDocument } from 'mongoose';
+import { HydratedDocument, Types } from 'mongoose';
 
 export type UserDocument = HydratedDocument<User>;
 
@@ -96,6 +97,9 @@ export class User {
     default: undefined,
   })
   profilePicture?: CloudinaryObject;
+
+  @Prop({ type: [{ type: Types.ObjectId, ref: 'Room' }] })
+  rooms!: Room[];
 }
 export const UserSchema = SchemaFactory.createForClass(User);
 

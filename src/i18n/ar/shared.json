@@ -1,18 +1,23 @@
 {
-  "errors": {
-    "error": "حدث خطأ",
-    "user": "لم يتم العثور على المستخدم",
-    "post": "لم يتم العثور على المنشور",
-    "comment": "لم يتم العثور على التعليق",
-    "admin": "لم يتم العثور على الادمن"
-  },
-  "success": {
-    "success": "تمت العملية بنجاح"
-  },
   "entities": {
     "user": "المستخدم",
     "admin": "ادمن",
     "post": "منشور",
-    "comment": "تعليق"
+    "comment": "تعليق",
+    "ad": "اعلان",
+    "room": "محادثة",
+    "message": "رسالة"
+  },
+  "success": {
+    "create": "تم اضافة {entity} بنجاح",
+    "update": "تم تعديل {entity} بنجاح",
+    "delete": "تم حذف {entity} بنجاح"
+  },
+  "errors": {
+    "create": "حدث خطأ عند صنع {entity}",
+    "update": "حدث خطأ عند تحديث {entity}",
+    "delete": "حدث خطأ عند حذف {entity}",
+    "readAll": "حدث خطأ عند استرجاع مجموعة {entity}",
+    "readOne": "حدث خطأ عند استرجاع {entity}"
   }
 }

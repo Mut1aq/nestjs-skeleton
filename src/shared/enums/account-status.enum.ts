@@ -1,5 +1,9 @@
 export enum AccountStatus {
-  Active = 1,
-  Blocked,
-  Deleted = 3,
+  DEFAULT = 1,
+  WANTS_TO_BE_SERVICE_PROVIDER,
+  SERVICE_PROVIDER = 3,
+  WANTS_TO_BE_VERIFIED,
+  VERIFIED = 5,
+  DELETED,
+  SUSPENDED = 7,
 }

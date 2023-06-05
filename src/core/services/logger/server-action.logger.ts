@@ -6,7 +6,7 @@ import { UserType, Message, ObjectType } from './logger.interface';
 
 export class ServerActionLogger implements LoggerService {
   logFile: WriteStream | null = null;
-  filePath = './logs/skeleton-action.log';
+  filePath = './logs/eve-action.log';
   constructor() {
     this._createOrPrepareActionFile();
   }

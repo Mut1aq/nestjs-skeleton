@@ -7,9 +7,10 @@ import {
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { JwtService } from '@nestjs/jwt';
-import { TokenPayload } from '@shared/interfaces/general/token-payload.interface';
-import { checkNullability } from '@shared/util/check-nullability.util';
 import { Request } from 'express';
+import { TokenPayload } from '@shared/interfaces/api/token-payload.interface';
+import { checkNullability } from '@shared/util/check-nullability.util';
+import { Role } from '@shared/enums/role.enum';
 
 @Injectable()
 export class RoleGuard implements CanActivate {
@@ -19,7 +20,7 @@ export class RoleGuard implements CanActivate {
   ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    const roles = this.reflector.get<string[]>('roles', context.getHandler());
+    const roles = this.reflector.get<Role[]>('roles', context.getHandler());
     const request = context.switchToHttp().getRequest<Request>();
 
     if (!roles) return true;
@@ -37,7 +38,7 @@ export class RoleGuard implements CanActivate {
     return this.matchRoles(roles, +tokenDecoded?.role);
   }
 
-  matchRoles(requiredRoles: string[], userRole: number): boolean {
+  matchRoles(requiredRoles: Role[], userRole: Role): boolean {
     if (requiredRoles.some((role) => [userRole].includes(+role))) return true;
     throw new HttpException(
       'auth.errors.unauthorized',

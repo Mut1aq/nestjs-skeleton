@@ -2,12 +2,12 @@ import { LoggerService } from '@nestjs/common';
 import { createWriteStream, existsSync, mkdirSync, WriteStream } from 'fs';
 import { format } from 'util';
 import { Types } from 'mongoose';
-import { Action } from './logger.interface';
 import { checkNullability } from '@shared/util/check-nullability.util';
+import { Action } from './logger.interface';
 
 export class WSActionLogger implements LoggerService {
   logFile: WriteStream | null = null;
-  filePath = './logs/skeleton-ws.log';
+  filePath = './logs/eve-ws.log';
   constructor() {
     this._createOrPrepareWSFile();
   }
