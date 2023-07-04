@@ -1,8 +1,7 @@
 import { LoggerService } from '@nestjs/common';
 import { createWriteStream, existsSync, mkdirSync, WriteStream } from 'fs';
 import { format } from 'util';
-import { Types } from 'mongoose';
-import { UserType } from './logger.interface';
+import { UserType } from './logger-helpers.interface';
 
 export class ServerAccessLogger implements LoggerService {
   logFile: WriteStream | null = null;
@@ -20,7 +19,7 @@ export class ServerAccessLogger implements LoggerService {
   accessLog(
     email: string,
     userType: UserType,
-    userID: Types.ObjectId,
+    userID: string,
     message: 'LOGGED IN' | 'LOGGED OUT',
   ) {
     this._logAction(
@@ -34,7 +33,7 @@ export class ServerAccessLogger implements LoggerService {
 
   private _formatMessageForLogFile(
     email: string,
-    userID: Types.ObjectId,
+    userID: string,
     message: 'LOGGED IN' | 'LOGGED OUT',
     userType: 'ADMIN' | 'SERVICE PROVIDER' | 'DEFAULT' | 'DOCTOR',
   ) {

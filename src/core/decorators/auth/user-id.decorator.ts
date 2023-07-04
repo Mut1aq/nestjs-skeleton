@@ -4,7 +4,7 @@ import {
   HttpException,
   HttpStatus,
 } from '@nestjs/common';
-import mongoose from 'mongoose';
+import mongoose, { Types } from 'mongoose';
 import { Request } from '@shared/interfaces/api/request.interface';
 import { checkNullability } from '@shared/util/check-nullability.util';
 
@@ -17,12 +17,12 @@ export const UserID = createParamDecorator(
     }
 
     const userID = request?.user?.sub;
-    if (!mongoose.isValidObjectId(userID) && checkNullability(userID)) {
+    if (!mongoose.isValidObjectId(userID) || !checkNullability(userID)) {
       throw new HttpException(
         `validation.invalidMongoDBID`,
-        HttpStatus.BAD_REQUEST,
+        HttpStatus.NOT_ACCEPTABLE,
       );
     }
-    return userID;
+    return new Types.ObjectId(userID);
   },
 );

@@ -19,7 +19,7 @@ import { checkNullability } from '@shared/util/check-nullability.util';
 export class UsernameConstraint implements ValidatorConstraintInterface {
   message!: string;
 
-  async validate(username: string, __?: ValidationArguments): Promise<any> {
+  validate(username: string, __?: ValidationArguments): boolean {
     if (!checkNullability(username)) return true;
     const usernameCharacters = username?.split('');
     const acceptedChars = [
@@ -63,7 +63,7 @@ export class UsernameConstraint implements ValidatorConstraintInterface {
 
     return true;
   }
-  defaultMessage(_?: ValidationArguments): any {
+  defaultMessage(_?: ValidationArguments): string {
     return this.message;
   }
 }

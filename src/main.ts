@@ -58,7 +58,7 @@ async function bootstrap() {
       exceptionFactory: i18nValidationErrorFactory,
       whitelist: true,
       transform: true,
-      forbidUnknownValues: false,
+      forbidUnknownValues: true,
       forbidNonWhitelisted: true,
       transformOptions: {
         enableImplicitConversion: true,

@@ -7,14 +7,15 @@ import {
   validImageFormats,
   validVideoFormats,
 } from '@shared/constants/validation/validation-constants';
+import { CloudinaryObject } from '@shared/interfaces/general/cloudinary-object.interface';
 
 @Injectable()
 export class CloudinaryService {
   constructor() {}
   async uploadFile(
-    image: Express.Multer.File,
+    file: Express.Multer.File,
     uploadOptions: UploadOptions,
-  ): Promise<{ url: string; publicID: string }> {
+  ): Promise<CloudinaryObject> {
     const uploadedFile: UploadApiResponse | undefined = await new Promise(
       (resolve, reject) => {
         const upload = v2.uploader.upload_stream(
@@ -27,6 +28,7 @@ export class CloudinaryService {
                 : validVideoFormats,
             resource_type: uploadOptions.resourceType,
             tags: uploadOptions.tags,
+            use_filename: true,
           },
           (err?: UploadApiErrorResponse, callResult?: UploadApiResponse) => {
             if (err) return reject(error);
@@ -34,7 +36,7 @@ export class CloudinaryService {
           },
         );
 
-        toStream(image.buffer).pipe(upload);
+        toStream(file.buffer).pipe(upload);
       },
     );
 

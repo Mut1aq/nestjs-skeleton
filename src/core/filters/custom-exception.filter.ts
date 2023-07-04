@@ -5,10 +5,11 @@ import {
   HttpException,
   Injectable,
 } from '@nestjs/common';
-import { Request, Response } from 'express';
+import { Response } from 'express';
 import { I18nService } from 'nestjs-i18n';
 import { ServerAPILogger } from '@services/logger/server-api.logger';
 import { nonTranslatableErrors } from '@shared/constants/validation/validation-constants';
+import { Request } from '@shared/interfaces/api/request.interface';
 
 @Catch(HttpException)
 @Injectable()

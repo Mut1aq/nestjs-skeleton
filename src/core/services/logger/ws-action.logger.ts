@@ -3,7 +3,7 @@ import { createWriteStream, existsSync, mkdirSync, WriteStream } from 'fs';
 import { format } from 'util';
 import { Types } from 'mongoose';
 import { checkNullability } from '@shared/util/check-nullability.util';
-import { Action } from './logger.interface';
+import { Action } from './logger-helpers.interface';
 
 export class WSActionLogger implements LoggerService {
   logFile: WriteStream | null = null;

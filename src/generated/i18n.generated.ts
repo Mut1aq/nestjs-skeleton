@@ -41,6 +41,8 @@ export type I18nTranslations = {
             "ad": string;
             "room": string;
             "message": string;
+            "email": string;
+            "notification": string;
         };
         "success": {
             "create": string;

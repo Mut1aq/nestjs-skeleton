@@ -5,7 +5,6 @@ import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { CacheService } from '@services/cache/cache.service';
-import { UserType } from '@services/logger/logger.interface';
 import { ServerAccessLogger } from '@services/logger/server-access.logger';
 import { Role } from '@shared/enums/role.enum';
 import { checkObjectNullability } from '@shared/util/check-nullability.util';
@@ -14,10 +13,10 @@ import { LoginAdminDto } from './dto/login-admin.dto';
 import { LoginUserDto } from './dto/login-user.dto';
 import * as bcrypt from 'bcrypt';
 import { User } from '@modules/system-users/users/interfaces/user.interface';
-import { roleFinder } from '@shared/util/role-finder.util';
 import { Admin } from '@modules/system-users/admins/interfaces/admin.interface';
 import { ReturnMessage } from '@shared/interfaces/api/return-message.interface';
 import { UsersHelperService } from '@modules/system-users/users/services/users-helper.service';
+import { UserType } from '@services/logger/logger-helpers.interface';
 
 @Injectable()
 export class AuthService {
@@ -96,25 +95,25 @@ export class AuthService {
   async logoutAdmin(adminID: Types.ObjectId) {
     const admin = await this.adminsService.findByID(adminID);
 
-    await this.cacheService.del(adminID.toString() + 'accessToken');
+    await this.cacheService.delete(adminID.toString() + 'accessToken');
 
     this.serverAccessLogger.accessLog(
       admin?.email as string,
       'ADMIN',
-      adminID,
+      adminID.toString(),
       'LOGGED OUT',
     );
   }
 
-  async logoutUser(userD: Types.ObjectId) {
-    const user = await this.usersHelperService.findByID(userD);
-    let userType: UserType = roleFinder(user.role);
+  async logoutUser(userID: Types.ObjectId) {
+    const user = await this.usersHelperService.findByID(userID);
+    let userType: UserType = 'DEFAULT';
 
-    await this.cacheService.del(userD.toString() + 'accessToken');
+    await this.cacheService.delete(userID.toString() + 'accessToken');
     this.serverAccessLogger.accessLog(
       user?.email,
       userType,
-      userD,
+      userID.toString(),
       'LOGGED OUT',
     );
   }

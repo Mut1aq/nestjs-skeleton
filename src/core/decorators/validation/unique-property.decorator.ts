@@ -25,7 +25,7 @@ export class UniqueUserPropertyConstraint
     value: string,
     validationArguments?: ValidationArguments,
   ): Promise<any> {
-    const [property] = validationArguments?.constraints as string[];
+    const [property] = validationArguments?.constraints!;
 
     const user = await this.userModel.findOne<User>({
       [property]: value,

@@ -1,7 +1,3 @@
-export type EmptyMongoQuery =
-  | string
-  | {
-      [key: string]: any;
-    }
-  | null
-  | undefined;
+export type EmptyMongoQuery = {
+  [key: string]: any;
+};

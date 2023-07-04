@@ -1,4 +1,4 @@
-import { StringDecorator } from '@decorators/data-types/string.decorator';
+import { StringValidator } from '@decorators/data-types/string-validator.decorator';
 import {
   Crs,
   Feature,
@@ -6,7 +6,7 @@ import {
 import { Allow } from 'class-validator';
 
 export class CreateFeatureCollectionDto {
-  @StringDecorator({
+  @StringValidator({
     property: 'Type',
     minLength: 0,
     maxLength: 100,
@@ -14,7 +14,7 @@ export class CreateFeatureCollectionDto {
   })
   type!: string;
 
-  @StringDecorator({
+  @StringValidator({
     property: 'Name',
     minLength: 0,
     maxLength: 100,

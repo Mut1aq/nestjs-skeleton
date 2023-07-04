@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
-import { DynamicTranslationService } from './dynamic-translation.service';
+import { TranslationService } from './translation.service';
 
 @Module({
   controllers: [],
-  providers: [DynamicTranslationService],
+  providers: [TranslationService],
   imports: [],
-  exports: [DynamicTranslationService],
+  exports: [TranslationService],
 })
 export class ServicesModule {}

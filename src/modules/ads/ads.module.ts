@@ -3,15 +3,15 @@ import { AdsService } from './ads.service';
 import { AdsController } from './ads.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Ad, AdSchema } from './entities/ad.entity';
-import { TaskSchedulingModule } from '@services/task-scheduling/task-scheduling.module';
 import { FileUploadModule } from '@services/file-upload/file-upload.module';
+import { AdsDeletionModule } from '@services/task-scheduling/ads-deletion/ads-deletion.module';
 
 @Module({
   controllers: [AdsController],
   providers: [AdsService],
   imports: [
     MongooseModule.forFeature([{ name: Ad.name, schema: AdSchema }]),
-    forwardRef(() => TaskSchedulingModule),
+    forwardRef(() => AdsDeletionModule),
     FileUploadModule,
   ],
   exports: [AdsService],

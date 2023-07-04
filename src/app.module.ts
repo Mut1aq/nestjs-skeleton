@@ -6,46 +6,42 @@ import {
 } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
-import { ScheduleModule } from '@nestjs/schedule';
 import { ThrottlerModule } from '@nestjs/throttler';
 import helmet from 'helmet';
 import { I18nModule } from 'nestjs-i18n';
 import { ModulesModule } from './modules/modules.module';
+import { ServicesModule } from './core/services/services.module';
 import {
   ConfigOptions,
   ThrottlerOptions,
   I18nModuleOptions,
-  MongooseConfig,
-  JwtConfig,
+  JWTOptions,
+  MongooseOptions,
 } from './shared/configs/app-options';
-import { DecoratorsModule } from './core/decorators/decorators.module';
-import { DevtoolsModule } from '@nestjs/devtools-integration';
 import {
   GlobalGuards,
   GlobalFilters,
   GlobalInterceptors,
   GlobalServices,
 } from './shared/configs/app-configs';
-import { RealIPMiddleware } from './core/middlewares/real-ip.middleware';
-import { ServicesModule } from './core/services/services.module';
+import { DecoratorsModule } from './core/decorators/decorators.module';
 import { JwtModule } from '@nestjs/jwt';
-import { CacheModule } from '@services/cache/cache.module';
+import { CacheModule } from './core/services/cache/cache.module';
+import { TaskSchedulingModule } from '@services/task-scheduling/task-scheduling.module';
+import { RealIPMiddleware } from '@middlewares/real-ip.middleware';
 
 @Module({
   imports: [
     ConfigModule.forRoot(ConfigOptions),
-    MongooseModule.forRootAsync(MongooseConfig),
-    ThrottlerModule.forRoot(ThrottlerOptions),
+    MongooseModule.forRootAsync(MongooseOptions),
     I18nModule.forRoot(I18nModuleOptions),
+    JwtModule.registerAsync(JWTOptions),
+    ThrottlerModule.forRoot(ThrottlerOptions),
     CacheModule,
-    ScheduleModule.forRoot(),
-    DevtoolsModule.register({
-      http: process.env.NODE_ENV !== 'production',
-    }),
+    TaskSchedulingModule,
     ServicesModule,
     DecoratorsModule,
     ModulesModule,
-    JwtModule.registerAsync(JwtConfig),
   ],
   controllers: [],
   providers: [

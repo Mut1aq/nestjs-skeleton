@@ -14,7 +14,7 @@ export class UsersController {
 
   @Get()
   @SkipThrottle(true)
-  findUsers(@Query() filterUsersDto: FilterUsersDto) {
+  async findUsers(@Query() filterUsersDto: FilterUsersDto) {
     return this.usersService.findAll(filterUsersDto);
   }
 

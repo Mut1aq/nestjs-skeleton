@@ -1,11 +1,10 @@
 import { AdsService } from '@modules/ads/ads.service';
 import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { SchedulerRegistry } from '@nestjs/schedule';
-import { Types } from 'mongoose';
-import { ServerAPILogger } from '../logger/server-api.logger';
+import { ServerAPILogger } from '@services/logger/server-api.logger';
 
 @Injectable()
-export class TimeoutSchedulingService {
+export class AdsDeletionService {
   constructor(
     private readonly schedulerRegistry: SchedulerRegistry,
     private readonly serverAPILogger: ServerAPILogger,
@@ -19,7 +18,7 @@ export class TimeoutSchedulingService {
    * @param milliseconds
    */
   dynamicTimeoutAdDeletion(
-    name: Types.ObjectId,
+    name: string,
     milliseconds: number = 10000,
     deletionDate: string,
   ) {

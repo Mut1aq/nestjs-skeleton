@@ -2,7 +2,7 @@ import { LoggerService } from '@nestjs/common';
 import { createWriteStream, existsSync, mkdirSync, WriteStream } from 'fs';
 import { format } from 'util';
 import { Types } from 'mongoose';
-import { UserType, Message, ObjectType } from './logger.interface';
+import { UserType, Message, ObjectType } from './logger-helpers.interface';
 
 export class ServerActionLogger implements LoggerService {
   logFile: WriteStream | null = null;

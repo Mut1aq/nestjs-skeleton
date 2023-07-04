@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { emptyDocumentWS } from '@shared/error-handling/empty-document.helper';
-import { Model, Types, PopulateOptions } from 'mongoose';
+import { Model, PopulateOptions, Types } from 'mongoose';
 import { UserDocument } from '../entities/user.entity';
 import { User } from '../interfaces/user.interface';
 
@@ -21,7 +21,6 @@ export class UserWSHelperService {
     const user = await this.userModel
       .findById<User>(userID)
       .populate(populateOptions);
-
     emptyDocumentWS(user, 'user');
     return user!;
   }

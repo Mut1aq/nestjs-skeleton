@@ -1,10 +1,5 @@
 export interface UploadOptions {
-  folder:
-    | 'Posts'
-    | 'Identity Pictures'
-    | 'Sample Of Work'
-    | 'Profile Pictures'
-    | 'Ads';
+  folder: string;
   allowedFormats: 'image' | 'video';
   resourceType: 'image' | 'video';
   tags?: string[];
@@ -17,4 +12,5 @@ export const tags = {
   sampleOfWork: ['Sample Of Work', 'Video'],
   profilePicture: ['Profile Picture', 'Image'],
   ad: ['Ad', 'Image'],
+  QRCode: ['QR Code', 'Image'],
 };

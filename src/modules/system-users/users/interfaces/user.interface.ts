@@ -10,6 +10,6 @@ export interface User extends Document {
   phoneNumber: string;
   birthday: string;
   role: Role;
-  profilePicture: CloudinaryObject;
+  profilePicture?: CloudinaryObject;
   rooms: Room[];
 }

@@ -1,12 +1,16 @@
-import { AdsModule } from '@modules/ads/ads.module';
-import { Module, forwardRef } from '@nestjs/common';
-import { LoggerModule } from '@services/logger/logger.module';
-import { TimeoutSchedulingService } from './timeout-scheduling.service';
+import { Module } from '@nestjs/common';
+import { ScheduleModule } from '@nestjs/schedule';
+import { AdsDeletionModule } from './ads-deletion/ads-deletion.module';
+import { AppointmentsCheckModule } from './appointments-check/appointments-check.module';
+import { TaskSchedulingListener } from './task-scheduling-listener';
+import { PromotedUsersCheckModule } from './promoted-users-check/promoted-users-check.module';
 
 @Module({
-  controllers: [],
-  providers: [TimeoutSchedulingService],
-  imports: [forwardRef(() => AdsModule), LoggerModule],
-  exports: [TimeoutSchedulingService],
+  imports: [
+    ScheduleModule.forRoot(),
+    AppointmentsCheckModule,
+    AdsDeletionModule,
+    PromotedUsersCheckModule,
+  ],
 })
-export class TaskSchedulingModule {}
+export class TaskSchedulingModule extends TaskSchedulingListener {}

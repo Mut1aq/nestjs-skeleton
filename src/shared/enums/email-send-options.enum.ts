@@ -1,9 +1,10 @@
-export enum AccountStatus {
-  DEFAULT = 1,
+export enum EmailSendOptions {
+  DEFAULT_USER = 1,
   WANTS_TO_BE_SERVICE_PROVIDER,
   SERVICE_PROVIDER = 3,
   WANTS_TO_BE_VERIFIED,
   VERIFIED = 5,
-  DELETED,
-  SUSPENDED = 7,
+  PROMOTED,
+  ALL = 7,
+  DOCTOR,
 }

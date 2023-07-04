@@ -2,15 +2,16 @@ import { LoggerService } from '@nestjs/common';
 import { createWriteStream, existsSync, mkdirSync, WriteStream } from 'fs';
 import { format } from 'util';
 import { ColorScheme } from '@shared/interfaces/general/color-scheme.interface';
-import {
-  APIColorScheme,
-  DebugColorScheme,
-  ErrorColorScheme,
-  LogColorScheme,
-  VerboseColorScheme,
-  WarnColorScheme,
-} from '../../../shared/constants/general/pallet';
 import { Request } from '@shared/interfaces/api/request.interface';
+import { checkNullability } from '@shared/util/check-nullability.util';
+import {
+  debugColor,
+  errorColor,
+  logColor,
+  verboseColor,
+  warnColor,
+  APIColor,
+} from '@shared/constants/general/pallet';
 
 export class ServerAPILogger implements LoggerService {
   logFile: WriteStream | null = null;
@@ -26,13 +27,18 @@ export class ServerAPILogger implements LoggerService {
       this.logFile = createWriteStream(this.filePath, { flags: 'a' }); // a for append/ w for write
   }
   debug(message: string, context: string = 'DEBUG') {
-    this.basicLog(message, context, 'DEBUG', DebugColorScheme);
+    this.customLog(message, context, 'DEBUG', debugColor);
   }
-  error(message: string, context: string = 'ERROR') {
-    this.basicLog(message, context, 'ERROR', ErrorColorScheme);
+  error(message: any, context: string = 'ERROR') {
+    this.customLog(
+      message,
+      checkNullability(context) ? context : 'ERROR',
+      'ERROR',
+      errorColor,
+    );
   }
 
-  log(message: string, context: string = 'LOG') {
+  log(message: string | number, context: string = 'LOG') {
     const uselessLogs = [
       'RouterExplorer',
       'I18nService',
@@ -40,18 +46,18 @@ export class ServerAPILogger implements LoggerService {
       'InstanceLoader',
     ];
     if (!uselessLogs.includes(context))
-      this.basicLog(message, context, 'LOG', LogColorScheme);
+      this.customLog(message, context, 'LOG', logColor);
   }
 
-  verbose(message: any, context = 'VERBOSE') {
-    this.basicLog(message, context, 'VERBOSE', VerboseColorScheme); // whatever that means -Talha
+  verbose(message: string, context = 'VERBOSE') {
+    this.customLog(message, context, 'VERBOSE', verboseColor); // whatever that means -Talha
   }
-  warn(message: any, context = 'WARN') {
-    this.basicLog(message, context, 'WARN', WarnColorScheme);
+  warn(message: string, context = 'WARN') {
+    this.customLog(message, context, 'WARN', warnColor);
   }
 
-  basicLog(
-    message: any,
+  customLog(
+    message: string | number,
     context: string,
     type: string | number,
     colorScheme: ColorScheme,
@@ -59,28 +65,27 @@ export class ServerAPILogger implements LoggerService {
     const { messageColor, contextColor } = colorScheme;
     const customMessage = `${messageColor}[Eve] ${
       process.pid
-    } - \x1B[39m${this._getDate()}     ${messageColor}${type}\x1B[39m ${contextColor}[${context}]\x1B[39m ${messageColor}${message}\x1B[39m`;
+    } - \x1B[39m${this._getDate()}     ${messageColor}${context}\x1B[39m ${contextColor}[${type}]\x1B[39m ${messageColor}${message}\x1B[39m`;
     console.log(customMessage);
   }
 
   APIlog(
     message: string,
-    context: any = 'API',
-    reqInfo: any,
+    context: string = 'API',
+    req: Request,
     statusCode: number | '🚀',
     error: string | null = null,
   ) {
-    const scheme = error ? ErrorColorScheme : APIColorScheme;
+    const scheme = error ? errorColor : APIColor;
     const colorScheme: ColorScheme = {
       ...scheme,
     };
 
-    this.basicLog(message, context, statusCode, colorScheme);
-    this._logAPI(this._formatMessageForLogFile(reqInfo, statusCode));
+    this.customLog(message, context, statusCode, colorScheme);
+    this._logAPI(this._formatMessageForLogFile(req, statusCode));
   }
 
   private _logAPI(message: string) {
-    // writing to file; A stands for apple
     this.logFile?.write(format('', message) + '\n');
   }
 
@@ -88,11 +93,11 @@ export class ServerAPILogger implements LoggerService {
     req: Request,
     statusCode: number | '🚀' = 500,
   ) {
-    const { hostname, method, headers, originalUrl, userIP } = req;
+    const { hostname, method, headers, originalUrl, userIP, user } = req;
 
     return `[HOST] ${hostname} - ${this._getDate()} [STATUS] ${statusCode} - [METHOD] ${method} - [URL] ${originalUrl} - [IP] ${userIP} - [USER-AGENT] ${
       headers['user-agent']
-    } - [LANGUAGE] ${headers['accept-language']}`;
+    } - [LANGUAGE] ${headers['accept-language']} - [ID] ${user?.sub}`;
   }
 
   private _getDate() {

@@ -6,7 +6,9 @@
     "comment": "تعليق",
     "ad": "اعلان",
     "room": "محادثة",
-    "message": "رسالة"
+    "message": "رسالة",
+    "email": "الايميل",
+    "notification": "الاشعار"
   },
   "success": {
     "create": "تم اضافة {entity} بنجاح",

@@ -3,10 +3,16 @@ import { ApiPropertyOptions } from '@nestjs/swagger';
 import { StringDataTypeValidation } from '@shared/interfaces/validation/string-data-type-validation.interface';
 import { checkNullability } from '@shared/util/check-nullability.util';
 import { Transform } from 'class-transformer';
-import { MinLength, MaxLength, IsNotEmpty, IsOptional } from 'class-validator';
+import {
+  MinLength,
+  MaxLength,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 import { i18nValidationMessage } from 'nestjs-i18n';
 
-export const StringDecorator = (options: StringDataTypeValidation) => {
+export const StringValidator = (options: StringDataTypeValidation) => {
   const {
     maxLength,
     minLength,
@@ -17,6 +23,7 @@ export const StringDecorator = (options: StringDataTypeValidation) => {
     lowercase,
     uppercase,
     name,
+    example,
   } = options;
   const validators = [
     MinLength(minLength, {
@@ -33,7 +40,12 @@ export const StringDecorator = (options: StringDataTypeValidation) => {
       }),
       each,
     }),
-    Transform((param) => param?.value?.trim()),
+    IsString({
+      message: i18nValidationMessage('validation.isString', {
+        property,
+      }),
+      each,
+    }),
   ];
 
   const APIPropertyOptions: ApiPropertyOptions = {};
@@ -41,6 +53,7 @@ export const StringDecorator = (options: StringDataTypeValidation) => {
   APIPropertyOptions.maxLength = maxLength;
   APIPropertyOptions.minLength = minLength;
   APIPropertyOptions.type = String;
+  APIPropertyOptions.example = example;
 
   if (checkNullability(isNotEmpty)) {
     validators.push(

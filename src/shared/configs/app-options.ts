@@ -61,10 +61,11 @@ export const ConfigOptions: ConfigModuleOptions = {
   expandVariables: true,
   cache: true,
 };
+
 export const SwaggerConfig: Omit<OpenAPIObject, 'paths'> = new DocumentBuilder()
   .setTitle('Eve')
-  .setDescription('Social Media Platform')
-  .setVersion('1.0')
+  .setDescription('Social Media Platform, for services')
+  .setVersion('1')
   .addBearerAuth(
     {
       type: 'http',
@@ -78,15 +79,17 @@ export const SwaggerConfig: Omit<OpenAPIObject, 'paths'> = new DocumentBuilder()
   )
   .build();
 
-export const MongooseConfig: MongooseModuleAsyncOptions = {
+export const MongooseOptions: MongooseModuleAsyncOptions = {
   imports: [ConfigModule],
   useFactory: async (configService: ConfigService) => ({
     uri: configService.get<string>('MONGODB_URL'),
+    retryAttempts: 10,
+    dbName: 'eveDB', // TODO: Change on the server
   }),
   inject: [ConfigService],
 };
 
-export const RedisConfig: CacheModuleAsyncOptions = {
+export const RedisOptions: CacheModuleAsyncOptions = {
   isGlobal: true,
   imports: [ConfigModule],
   useFactory: async (configService: ConfigService) => {
@@ -104,7 +107,7 @@ export const RedisConfig: CacheModuleAsyncOptions = {
   inject: [ConfigService],
 };
 
-export const JwtConfig: JwtModuleAsyncOptions = {
+export const JWTOptions: JwtModuleAsyncOptions = {
   imports: [ConfigModule],
   useFactory: async (configService: ConfigService) => ({
     secret: configService.get<string>('USER_ACCESS_TOKEN_SECRET'),

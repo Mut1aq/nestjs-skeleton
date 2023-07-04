@@ -6,7 +6,9 @@
     "comment": "Comment",
     "ad": "Ad",
     "room": "Room",
-    "message": "Message"
+    "message": "Message",
+    "email": "Email",
+    "notification": "Notification"
   },
   "success": {
     "create": "Successfully added a new {entity}",

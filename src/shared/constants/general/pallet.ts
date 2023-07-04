@@ -1,46 +1,37 @@
 // ? more info on these colors
 // ? https://tforgione.fr/posts/ansi-escape-codes/
 
-const LOG = {
+export const logColor = {
   // message: cyan bright, context: magnet bright (my favorite)
   messageColor: '\x1B[96m',
   contextColor: `\x1B[95m`,
 };
 
-const ERROR = {
+export const errorColor = {
   // message: red, context: idk what the second color is called
   messageColor: '\x1B[31m',
   contextColor: `\x1b[1;30m`,
 };
 
-const VERBOSE = {
+export const verboseColor = {
   messageColor: '\x1B[95m',
   contextColor: `\x1b[1;30;40m`,
 };
 
-const WARN = {
+export const warnColor = {
   // message: RED, context: white
   messageColor: '\x1b[1;31m',
   contextColor: `\x1b[1;37m`,
 };
 
-const DEBUG = {
+export const debugColor = {
   // reverse LOG
   messageColor: '\x1B[95m',
   contextColor: `\x1B[96m`,
 };
 
-const API = {
+export const APIColor = {
   // message: green, context: yellow aka basic nest
   messageColor: '\x1B[32m',
   contextColor: `\x1B[33m`,
-};
-
-export {
-  LOG as LogColorScheme,
-  ERROR as ErrorColorScheme,
-  VERBOSE as VerboseColorScheme,
-  WARN as WarnColorScheme,
-  DEBUG as DebugColorScheme,
-  API as APIColorScheme,
 };

@@ -4,7 +4,7 @@ import { ChatGateway } from './chat.gateway';
 import { ChatService } from './chat.service';
 import { RoomsModule } from './rooms/rooms.module';
 import { WSAccessTokenGuard } from '@guards/ws-access-token.guard';
-import { JwtConfig } from '@shared/configs/app-options';
+import { JWTOptions } from '@shared/configs/app-options';
 import { JwtModule } from '@nestjs/jwt';
 import { MessagesModule } from './messages/messages.module';
 import { LoggerModule } from '@services/logger/logger.module';
@@ -14,7 +14,7 @@ import { LoggerModule } from '@services/logger/logger.module';
     LoggerModule,
     UsersModule,
     RoomsModule,
-    JwtModule.registerAsync(JwtConfig),
+    JwtModule.registerAsync(JWTOptions),
     MessagesModule,
   ],
   providers: [ChatGateway, ChatService, WSAccessTokenGuard],

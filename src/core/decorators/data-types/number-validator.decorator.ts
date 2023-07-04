@@ -6,9 +6,18 @@ import { Type } from 'class-transformer';
 import { Min, Max, IsNotEmpty, IsOptional, IsInt } from 'class-validator';
 import { i18nValidationMessage } from 'nestjs-i18n';
 
-export const NumberDecorator = (options: NumberDataTypeValidation) => {
-  const { max, min, property, each, isInt, isNotEmpty, isOptional, name } =
-    options;
+export const NumberValidator = (options: NumberDataTypeValidation) => {
+  const {
+    max,
+    min,
+    property,
+    each,
+    isInt,
+    isNotEmpty,
+    isOptional,
+    name,
+    example,
+  } = options;
   const validators = [
     Type(() => Number),
     Min(min, {
@@ -32,6 +41,7 @@ export const NumberDecorator = (options: NumberDataTypeValidation) => {
   APIPropertyOptions.maximum = max;
   APIPropertyOptions.minimum = min;
   APIPropertyOptions.type = Number;
+  APIPropertyOptions.example = example;
 
   if (checkNullability(isInt)) {
     validators.push(

@@ -1,4 +1,3 @@
-import { AccountStatus } from '@shared/enums/account-status.enum';
 import { Role } from '@shared/enums/role.enum';
 import { Types } from 'mongoose';
 
@@ -8,7 +7,12 @@ import { Types } from 'mongoose';
 export interface TokenPayload {
   sub: Types.ObjectId;
   role: Role;
-  accountStatus: AccountStatus;
+  iat: number;
+  exp: number;
+}
+
+export interface ForgetPasswordToken {
+  sub: Types.ObjectId;
   iat: number;
   exp: number;
 }

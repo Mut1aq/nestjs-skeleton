@@ -7,7 +7,7 @@
             <tr>
               <td>
                 <a href="">
-                  <img src="cid:your-parts-logo" class="header-img" />
+                  <img src="cid:skeleton-logo" class="header-img" />
                 </a>
               </td>
             </tr>
@@ -21,9 +21,7 @@
             <tr>
               <td>
                 <h1 style="color: #0d0d0d">Dear <%= name %>,</h1>
-                <p class="email-intro-par">
-                  This Email was sent per a request to reset the password
-                </p>
+                <p class="email-intro-par">Welcome to Eve</p>
               </td>
             </tr>
             <tr>
@@ -31,22 +29,9 @@
                 <hr />
               </td>
             </tr>
-            <tr>
-              <td>
-                <p>To Reset your password please visit the following link</p>
-                <p style="color: #0d0d0d">
-                  <a href="<%= link +'auth/reset-password/' + token %>"
-                    >Reset Password
-                  </a>
-                </p>
-                <br />
-              </td>
-            </tr>
           </table>
         </td>
       </tr>
-
-      <!-- email footer -->
     </table>
   </center>
 </body>

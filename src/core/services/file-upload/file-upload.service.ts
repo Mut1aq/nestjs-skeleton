@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { CloudinaryObject } from '@shared/interfaces/general/cloudinary-object.interface';
 import { CloudinaryService } from './cloudinary/cloudinary.service';
 import { UploadOptions } from './interfaces/upload-options';
 
@@ -13,7 +14,7 @@ export class FileUploadService {
   uploadFile(
     file: Express.Multer.File,
     uploadOptions: UploadOptions,
-  ): Promise<{ url: string; publicID: string }> {
+  ): Promise<CloudinaryObject> {
     return this.cloudinaryService.uploadFile(file, uploadOptions);
   }
 }
